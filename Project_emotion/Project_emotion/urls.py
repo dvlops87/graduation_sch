@@ -22,5 +22,7 @@ urlpatterns = [
     path('', user.user_login, name="login"),
     path('home/', user.home, name="home"),
     path('signup/', user.user_signup, name="signup"),
+    path('mypage/<int:user_id>', user.mypage, name="mypage"),
+    path('user/api/checkUsername', user.checkUsername),
 
 ]
