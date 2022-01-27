@@ -1,6 +1,7 @@
+from tkinter.tix import Tree
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .models import User
+from .models import User, emotion
 from django.contrib import auth
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse, JsonResponse
@@ -69,3 +70,27 @@ def checkUsername(request):
         'data' : "not exist" if user is None else "exist"
     }
     return JsonResponse(result)
+
+from datetime import datetime
+
+def calender(request, user_id=id, t_month=datetime.today().month , t_day=datetime.today().day):
+    details = get_object_or_404(User, id=user_id)
+    emotions = get_object_or_404(emotion, user_id=details.id, month=t_month, day=t_day)
+    return render(request, 'calender.html', {'details':details, 'emotions':emotions})
+
+
+
+import subprocess
+
+def test(request):
+    # with open('C:\\school\\UPF_WCD\\out.txt', 'wb') as f:
+    #     out = subprocess.run(['ls', '-l'], capture_output=True)
+    #     f.write(out.stdout)
+    
+    # subprocess.run('C:\\school\\UPF_WCD\\tt.txt', shell=True)
+    # = subprocess.call('C:\\school\\UPF_WCD\\tt.txt', shell=True)
+    # subprocess.run('start notepad', shell=True)
+    subprocess.run('start C:\\school\\UPF_WCD\\tt.txt', shell=True)
+    return render(request, 'test.html')
+    # 우분투 18.
+    # 엔비디에서 제공함

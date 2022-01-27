@@ -1,0 +1,103 @@
+@font-face {
+    font-family: 'OTWelcomeRA';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: black; text-decoration: underline; cursor: pointer;}
+body {
+    font-family: 'OTWelcomeRA';
+    margin: 0px;
+}
+#container {
+    height: 1280px;
+    width: 700px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#mood_box {
+    height: 100%;
+    width: 20%;
+    margin: 0px;
+    display: flex;
+    justify-content:end;
+    align-items: center;
+    flex-direction: column;
+}
+#setup {
+    height: 8%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(202, 230, 255);
+}
+#mood {
+    height: 8%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(239, 255, 202);
+}
+#flower_box {
+    height: 100%;
+    width: 60%;
+    margin: 0px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(226, 226, 226);
+}
+#time_box {
+    height: 10%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-color: rgb(255, 203, 251);
+}
+#flower {
+    height: 90%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    background-color: rgb(199, 239, 255);
+}
+#search_box {
+    height: 100%;
+    width: 20%;
+    margin: 0px;
+    display: flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-direction: column;
+}
+#mypage {
+    height: 8%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 196, 196);
+}
+#search {
+    height: 8%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(240, 255, 186);
+}
