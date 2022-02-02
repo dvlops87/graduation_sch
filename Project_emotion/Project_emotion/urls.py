@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 import account.views as user
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +28,7 @@ urlpatterns = [
     path('user/api/checkUsername', user.checkUsername),
     path('calender/<int:user_id>/<int:t_month>/<int:t_day>',user.calender, name='calender'),
     path('write_diary/<int:user_id>', user.write_diary, name="write_diary"),
+    path('delete_diary/<int:user_id>/<int:emotion_id>', user.delete_diary, name="delete_diary"),
 
-    path('test/', user.test, name="test"),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,9 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <title>Home</title>
 </head>
 <body>
+    <script>
+        $(function(){
+            var Target = document.getElementById("clock");
+            function clock() {
+                var time = new Date();
+    
+                var month = time.getMonth();
+                var date = time.getDate();
+                var day = time.getDay();
+                var week = ['일', '월', '화', '수', '목', '금', '토'];
+    
+                var hours = time.getHours();
+                var minutes = time.getMinutes();
+                var seconds = time.getSeconds();
+    
+                Target.innerText = 
+                `${month + 1}월 ${date}일 ${week[day]}요일 ` +
+                `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+                    
+            }
+            clock();
+            setInterval(clock, 1000); // 1초마다 실행
+        })
+    </script>
     <div id="container">
         <div id="mood_box">
             <div id="setup">
@@ -20,7 +45,7 @@
         </div>
         <div id="flower_box">
             <div id="time_box">
-                <p>time</p>
+                <h1 id="clock" style="color:black;">clock</h1>
             </div>
             <div id="flower">
                 <p>flower</p>

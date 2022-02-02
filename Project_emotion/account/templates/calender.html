@@ -19,7 +19,6 @@
             var myEmotion = document.getElementById('myEmotion').className;
             var t_day = document.getElementById('t_day').className;
             var t_month = document.getElementById('t_month').className;
-            // <p id="emotion_value">오늘의 기분 : {{emotions.emotion}}</p>
             
 
             $("input[name=preMon]").click(function() { // 이전달
@@ -81,7 +80,9 @@
     </script>
 
 <div type="hidden" id="myId" class="{{details.id}}"></div>
+{% if emotions %}
 <div type="hidden" id="myEmotion" class="{{emotions.emotion}}"></div>
+{% endif %}
 <div type="hidden" id="t_day" class="{{t_day}}"></div>
 <div type="hidden" id="t_month" class="{{t_month}}"></div>
     <div id="container">
@@ -110,11 +111,20 @@
         <div id="emotion_box">
             <div id="emotion">
                 <p>{{t_month}}월 {{t_day}}일</p>
+                {% if t_emotion %}
                 <p id="emotion_value">오늘의 기분 : {{t_emotion}}</p>
+                {% else %}
+                <p id="emotion_value">일기를 작성해주세요!</p>
+                {% endif %}
+                {% if emotions.image %}
+                <img src="{{emotions.image.url}}" width="200"><br>
+                {% endif %}
             </div>
             <div id="choose">
                 <a href="{% url 'write_diary' details.id %}">일기 작성</a>
-                <a href="">일기 삭제</a>
+                {% if emotions.id %}
+                <a href="{% url 'delete_diary' details.id emotions.id %}">일기 삭제</a>
+                {% endif %}
             </div>
         </div>
     </div>

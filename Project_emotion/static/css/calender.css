@@ -20,76 +20,78 @@ input{
     height: 1280px;
     width: 700px;
     margin: 0px;
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-
-#login_box {
-    width: 80%;
-    height: 80%;
+#calender_box {
+    height: 55%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(255, 229, 229);
+}
+#emotion_box {
+    height: 45%;
+    width: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(219, 219, 219);
+}
+#emotion {
+    height: 100%;
+    width: 50%;
+    margin: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: 3px solid rgb(103, 103, 248);
-    border-radius: 15px;
+    background-color: rgb(219, 219, 219);
 }
-
-#login_title {
-    width: 100%;
-    height: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 40px;
-}
-
-#login {
-    width: 100%;
-    height: 40%;
+#choose {
+    height: 100%;
+    width: 50%;
+    margin: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-size: 28px;
-
-}
-#button_box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:130%;
-    height:15%;
-
-}
-#button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:20%;
-    height:40%;
-    font-size: 28px;
-    border: 3px solid rgb(103, 103, 248);
-    border-radius: 10px;
-    padding-top: 10px;
+    background-color: rgb(221, 255, 223);
 }
 
-#button:hover {cursor: pointer;}
 
-#password_check_button{
-    padding-top: 8px;
-    font-size: 16px;
-    width: 80px;
-    height: 30px;
-    font-family: 'OTWelcomeRA';
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgb(63, 63, 63);
-    background-color: aliceblue;
-    border-radius: 8px;
-    margin-left: 79.5%;
+table {
+    clear: both;
 }
-#password_check_button:hover {cursor: pointer;}
+th {
+    height: 50px;
+    width: 70px;
+    background-color:  orange;
+}
+td {
+    text-align: center;
+    height: 50px;
+    width: 70px;
+    background-color: #FFFDC5;  
+}
+input {
+    height: 50px;
+    width: 70px;
+    border: none;
+    background-color:  orange;
+    font-size: 30px;
+}
+.year_mon{
+    font-size: 25px;
+}
+.colToday{
+    background-color: #FFA07A;
+}
+.selToday{
+    background-color: #b9af52;
+}

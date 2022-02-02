@@ -12,5 +12,6 @@ class emotion(models.Model):
     emotion = models.IntegerField(default=0)
     month = models.IntegerField(default=0)
     day = models.IntegerField(default=0)
+    image = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
     def __str__(self):
         return str(str(self.month)+'/'+str(self.day))

@@ -123,7 +123,8 @@ STATICFILES_DIR = [
     os.path.join(BASE_DIR, 'emotion_user','static')
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+MEDIA_URL = '/files/' # 업로드 할 경로
+MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads') #로컬 디렉토리 어디에 저장할 것인지
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
