@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Write</title>
 </head>
 <body>
-    <button>클릭</button>
-    <a href="{% url 'test' %}">클릭해</a>
+    <h1>작성한 달력 보기</h1>
+    <a href="{% url 'calender' details.id t_day t_month %}">감정 달력</a>
 </body>
 </html>

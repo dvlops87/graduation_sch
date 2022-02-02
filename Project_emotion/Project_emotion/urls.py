@@ -25,6 +25,7 @@ urlpatterns = [
     path('mypage/<int:user_id>', user.mypage, name="mypage"),
     path('user/api/checkUsername', user.checkUsername),
     path('calender/<int:user_id>/<int:t_month>/<int:t_day>',user.calender, name='calender'),
+    path('write_diary/<int:user_id>', user.write_diary, name="write_diary"),
 
     path('test/', user.test, name="test"),
 

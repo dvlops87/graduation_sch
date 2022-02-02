@@ -5,6 +5,12 @@ from .models import User, emotion
 from django.contrib import auth
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse, JsonResponse
+import datetime
+import subprocess
+
+
+
+dt_now = datetime.datetime.now()
 
 # Create your views here.
 def user_login(request):
@@ -34,7 +40,7 @@ def user_signup(request):
     return render(request, 'signup.html')
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html',{'dt_now':dt_now})
 
 def mypage(request, user_id=id):
     details = get_object_or_404(User, id=user_id)
@@ -71,16 +77,25 @@ def checkUsername(request):
     }
     return JsonResponse(result)
 
-from datetime import datetime
-
-def calender(request, user_id=id, t_month=datetime.today().month , t_day=datetime.today().day):
+def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion, user_id=details.id, month=t_month, day=t_day)
-    return render(request, 'calender.html', {'details':details, 'emotions':emotions})
+    if emotions.emotion == 1:
+        t_emotion ="행복"
+    elif emotions.emotion == 2:
+        t_emotion ="우울"
+    elif emotions.emotion == 3:
+        t_emotion ="지침"
+    elif emotions.emotion == 4:
+        t_emotion ="화남"
+    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 't_day':t_day,'t_month':t_month})
 
-
-
-import subprocess
+def write_diary(request, user_id=id):
+    details = get_object_or_404(User, id=user_id)
+    t_month=dt_now.month
+    t_day=dt_now.day
+    subprocess.run('start C:\\school\\UPF_WCD\\tt.txt', shell=True)
+    return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
 
 def test(request):
     # with open('C:\\school\\UPF_WCD\\out.txt', 'wb') as f:

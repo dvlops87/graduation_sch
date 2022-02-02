@@ -14,7 +14,13 @@
     <script>
         $(function(){
             var today = new Date();
-            var date = new Date();           
+            var date = new Date();
+            var myId = document.getElementById('myId').className;           
+            var myEmotion = document.getElementById('myEmotion').className;
+            var t_day = document.getElementById('t_day').className;
+            var t_month = document.getElementById('t_month').className;
+            // <p id="emotion_value">오늘의 기분 : {{emotions.emotion}}</p>
+            
 
             $("input[name=preMon]").click(function() { // 이전달
                 $("#calendar > tbody > td").remove();
@@ -29,7 +35,6 @@
                 today = new Date ( today.getFullYear(), today.getMonth()+1, today.getDate());
                 buildCalendar();
             })
-
 
             function buildCalendar() {
                 
@@ -53,7 +58,7 @@
                     if (plusDate==0) {
                         $("#calendar tbody:last").append("<tr></tr>");
                     }
-                    $("#calendar tbody:last").append("<td class='date'>"+ i +"</td>");
+                    $("#calendar tbody:last").append('<td class="date" name="now_day"><a href="http://localhost:8000/calender/'+myId+'/'+(nowMonth+1)+'/'+i+'">'+ i +"</a></td>");
                 }
                 if($("#calendar > tbody > td").length%7!=0) { //마지막 줄 빈칸
                     for(i=1; i<= $("#calendar > tbody > td").length%7; i++) {
@@ -64,24 +69,21 @@
                     if(nowYear==date.getFullYear() && nowMonth==date.getMonth() && $(".date").eq(index).text()==date.getDate()) {
                         $(".date").eq(index).addClass('colToday');
                     }
-                }) 
+                    if(nowMonth==Number(t_month)-1 &&$(".date").eq(index).text()==t_day){
+                        $(".date").eq(index).addClass('selToday');
+                    }
+                })
             }
             buildCalendar();
 
-            var myId = document.getElementById("myId").value;
-            document.getElementsByClassName("date").onclick = function() {
-                var clicked_day = $(this).val();
-                location.href="calender/"+myId+"/"+nowMonth+"/"+clicked_day;
-            };
-            document.getElementsByClassName("colToday").onclick = function() {
-                var clicked_day = $(this).val();
-                location.href="calender/"+myId+"/"+nowMonth+"/"+clicked_day;
-            };
         })
         
     </script>
 
-<div type="hidden" id="myId" name="variable" value="{{details.id}}"></div>
+<div type="hidden" id="myId" class="{{details.id}}"></div>
+<div type="hidden" id="myEmotion" class="{{emotions.emotion}}"></div>
+<div type="hidden" id="t_day" class="{{t_day}}"></div>
+<div type="hidden" id="t_month" class="{{t_month}}"></div>
     <div id="container">
         <div id="calender_box">
             <table id="calendar">
@@ -107,10 +109,12 @@
         </div>
         <div id="emotion_box">
             <div id="emotion">
-                <p>오늘의 기분 : {{emotions.emotion}}</p>
+                <p>{{t_month}}월 {{t_day}}일</p>
+                <p id="emotion_value">오늘의 기분 : {{t_emotion}}</p>
             </div>
             <div id="choose">
-
+                <a href="{% url 'write_diary' details.id %}">일기 작성</a>
+                <a href="">일기 삭제</a>
             </div>
         </div>
     </div>

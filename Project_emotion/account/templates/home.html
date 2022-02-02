@@ -32,7 +32,7 @@
                 <a href="{% url 'mypage' user.id %}">마이 페이지</a>
             </div>
             <div id="search">
-                <a href="{% url 'calender' user.id 1 28 %}">감정 달력</a>
+                <a href="{% url 'calender' user.id dt_now.month dt_now.day %}">감정 달력</a>
             </div>
         </div>
     </div>
