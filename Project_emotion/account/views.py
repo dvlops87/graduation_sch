@@ -95,10 +95,8 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
         t_emotion ="화남"
     return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
-def write_diary(request, user_id=id):
+def write_diary(request, t_month, t_day, user_id=id):
     details = get_object_or_404(User, id=user_id)
-    t_month=dt_now.month
-    t_day=dt_now.day
     f = open('C:\\Users\\tjdgu\\Desktop\\z.csv', 'r', encoding='utf-8')
     rdr = csv.reader(f)
     emo = []

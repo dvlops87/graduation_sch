@@ -86,6 +86,9 @@
 <div type="hidden" id="t_day" class="{{t_day}}"></div>
 <div type="hidden" id="t_month" class="{{t_month}}"></div>
     <div id="container">
+        <div id="back">
+            <a href="http://127.0.0.1:8000/home/">back</a>
+        </div>
         <div id="calender_box">
             <table id="calendar">
                 <thead>
@@ -121,7 +124,7 @@
                 {% endif %}
             </div>
             <div id="choose">
-                <a href="{% url 'write_diary' details.id %}">일기 작성</a>
+                <a href="{% url 'write_diary' t_month t_day details.id %}">일기 작성</a>
                 {% if emotions.id %}
                 <a href="{% url 'delete_diary' details.id emotions.id %}">일기 삭제</a>
                 {% endif %}
