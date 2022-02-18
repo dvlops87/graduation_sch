@@ -1,5 +1,6 @@
 import numbers
 from tkinter.tix import Tree
+from tracemalloc import get_object_traceback
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from .models import User, emotion, calender_emotion
@@ -172,6 +173,39 @@ def view_diary(request, user_id,emotion_id, emotion_num):
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
 
-def set_timer(request):
-    if request.method == POST:
-        return 
+def set_timer(request, user_id):
+    details = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        ampm = request.POST['AMPM']
+        hour = int(request.POST['hour'])
+        minute = request.POST['minute']
+        if ampm == 'PM':
+            hour +=12
+        elif hour <10 :
+            hour = '0'+str(hour)
+        details.alram_hour = hour
+        details.alram_minute = minute
+        print(hour, minute)
+        details.save()
+        f = open('C:\\school\\UPF_WCD\\time.txt', 'w') #알람 시간 작성
+        time = str(hour) + ' ' + str(minute)
+        f.write(time)
+        f.close()
+        return render(request, 'set_timer.html', {'details' : details})
+    else :
+        return render(request, 'set_timer.html', {'details' : details})
+
+
+def set_led(request, user_id):
+    details = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        color = request.POST['color']
+        print(color)
+        details.led_color = color
+        details.save()
+        f = open('C:\\school\\UPF_WCD\\led.txt', 'w') #led 색상 작성
+        f.write(color)
+        f.close()
+        return render(request, 'set_led.html', {'details' : details})
+    else :
+        return render(request, 'set_led.html', {'details' : details})

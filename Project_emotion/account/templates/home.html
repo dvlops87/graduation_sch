@@ -40,10 +40,10 @@
     <div id="container">
         <div id="mood_box">
             <div id="setup">
-                <p>setup</p>
+                <a href="{% url 'set_timer' user.id %}">알람 설정</a>
             </div>
             <div id="mood">
-                <p>mood</p>
+                <a href="{% url 'set_led' user.id %}">조명 설정</a>
             </div>
         </div>
         <div id="flower_box">

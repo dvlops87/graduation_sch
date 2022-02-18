@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/set_led.css' %}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>무드등 설정</title>
+</head>
+<body>
+    <script>
+        $(window.onload=function(){
+            var led_color = document.getElementById('led_color').innerText
+            document.getElementById('selected_color').style.backgroundColor = '#'+led_color
+            
+        })
+    </script>
+    <div id="container">
+        <div id="back">
+            <a href="http://127.0.0.1:8000/home/">back</a>
+        </div>
+        <div id="login_box">
+            <div id="login_title">
+                <p>무드등 설정</p>
+            </div>
+            <div id="led_color" style="display: none;">{{details.led_color}}</div>
+            <div id="login">
+                <form action="{% url 'set_led' details.id %}" method="post">
+                    <label><div id="selected_color" style="width: 100%; height: 11%; padding: 7px 0px 0px 0px;">설정된 색상 : {{details.led_color}}</div></label>
+                    {% csrf_token %}
+                    <br>
+                    <label for="color_1"><div class="color_div color_one">첫번째 색</div></label>
+                    <input type="radio" name="color" id="color_1" value="597cd4"style="display: none;"/>
+                    <br>
+                    <label for="color_2"><div class="color_div color_two">두번째 색</div></label>
+                    <input type="radio" name="color" id="color_2" value="a2f0a6"style="display: none;"/>
+                    <br>
+                    <label for="color_3"><div class="color_div color_thr">세번째 색</div></label>
+                    <input type="radio" name="color" id="color_3" value="946c52"style="display: none;"/>
+                    <br>
+                    <input type="submit" id="login_button" style="display: none;">
+                </form>
+            </div>
+            <label for="login_button" id="button_box"><div id="button">결정</div></label>
+        </div>
+    </div>
+</body>
+</html>

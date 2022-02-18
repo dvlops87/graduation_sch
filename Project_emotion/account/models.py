@@ -4,6 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=40,default='')
+    alram_hour = models.IntegerField(default=12)
+    alram_minute = models.IntegerField(default=0)
+    led_color = models.CharField(max_length=40,default='')
     def __str__(self):
         return str(self.username)
 
