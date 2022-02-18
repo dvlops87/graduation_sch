@@ -28,7 +28,8 @@ urlpatterns = [
     path('user/api/checkUsername', user.checkUsername),
     path('calender/<int:user_id>/<int:t_month>/<int:t_day>',user.calender, name='calender'),
     path('write_diary/<int:t_month>/<int:t_day>/<int:user_id>', user.write_diary, name="write_diary"),
-    path('delete_diary/<int:user_id>/<int:emotion_id>', user.delete_diary, name="delete_diary"),
+    path('delete_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.delete_diary, name="delete_diary"),
+    path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -20,7 +20,7 @@
             var t_day = document.getElementById('t_day').className;
             var t_month = document.getElementById('t_month').className;
             
-
+            
             $("input[name=preMon]").click(function() { // 이전달
                 $("#calendar > tbody > td").remove();
                 $("#calendar > tbody > tr").remove();
@@ -80,9 +80,7 @@
     </script>
 
 <div type="hidden" id="myId" class="{{details.id}}"></div>
-{% if emotions %}
 <div type="hidden" id="myEmotion" class="{{emotions.emotion}}"></div>
-{% endif %}
 <div type="hidden" id="t_day" class="{{t_day}}"></div>
 <div type="hidden" id="t_month" class="{{t_month}}"></div>
     <div id="container">
@@ -125,8 +123,13 @@
             </div>
             <div id="choose">
                 <a href="{% url 'write_diary' t_month t_day details.id %}">일기 작성</a>
-                {% if emotions.id %}
-                <a href="{% url 'delete_diary' details.id emotions.id %}">일기 삭제</a>
+                <br>
+                {% if emotions %}
+                {% for emotion in emotions %}
+                <a href="{% url 'view_diary' details.id emotion.id emotion.number %}">{{emotion.number}}번째 일기 보기</a>
+                <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}">{{emotion.number}}번째 일기 삭제</a>
+                <br>
+                {% endfor %}
                 {% endif %}
             </div>
         </div>
