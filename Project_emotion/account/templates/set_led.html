@@ -30,20 +30,30 @@
                 <form action="{% url 'set_led' details.id %}" method="post">
                     <label><div id="selected_color" style="width: 100%; height: 11%; padding: 7px 0px 0px 0px;">설정된 색상 : {{details.led_color}}</div></label>
                     {% csrf_token %}
+                    {{details.led_bright}}
+                    <input type="radio" name="color" style="display: none;" value="{{details.led_color}}" checked/>
+                    <input type="radio" name="power_radio" style="display: none;" id="power_radio" value="1" checked/>
                     <br>
                     <label for="color_1"><div class="color_div color_one">첫번째 색</div></label>
-                    <input type="radio" name="color" id="color_1" value="597cd4"style="display: none;"/>
+                    <input type="radio" name="color" id="color_1" value="597cd4"style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <br>
                     <label for="color_2"><div class="color_div color_two">두번째 색</div></label>
-                    <input type="radio" name="color" id="color_2" value="a2f0a6"style="display: none;"/>
+                    <input type="radio" name="color" id="color_2" value="a2f0a6"style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <br>
                     <label for="color_3"><div class="color_div color_thr">세번째 색</div></label>
-                    <input type="radio" name="color" id="color_3" value="946c52"style="display: none;"/>
+                    <input type="radio" name="color" id="color_3" value="946c52"style="display: none;" onclick="$('#login_button').trigger('click');"/>
+                    <br>
+                    <label for="power"><div class="color_div">전원 {{details.led_power}}</div></label>
+                    <input type="radio" name="power_radio" id="power" value="0" style="display: none;" onclick="$('#login_button').trigger('click');"/>
+                    <br>
+                    <div class="color_div">밝기
+                    <input class="slidebar" type="range" name="led_bright" id="led_bright" value="{{details.led_bright}}" min="0" max="100"  onchange="$('#login_button').trigger('click');">
+                    </div>
                     <br>
                     <input type="submit" id="login_button" style="display: none;">
                 </form>
             </div>
-            <label for="login_button" id="button_box"><div id="button">결정</div></label>
+            <!-- <label for="login_button" id="button_box"><div id="button">결정</div></label> -->
         </div>
     </div>
 </body>

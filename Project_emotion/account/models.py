@@ -7,6 +7,8 @@ class User(AbstractUser):
     alram_hour = models.IntegerField(default=12)
     alram_minute = models.IntegerField(default=0)
     led_color = models.CharField(max_length=40,default='')
+    led_power = models.IntegerField(default=0)
+    led_bright = models.IntegerField(default=5)
     def __str__(self):
         return str(self.username)
 

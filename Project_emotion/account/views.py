@@ -187,7 +187,7 @@ def set_timer(request, user_id):
         print(hour, minute)
         details.save()
         f = open('C:\\school\\UPF_WCD\\time.txt', 'w') #알람 시간 작성
-        time = str(hour) + ' ' + str(minute)
+        time = str(hour) +  str(minute)
         f.write(time)
         f.close()
         return render(request, 'set_timer.html', {'details' : details})
@@ -199,12 +199,26 @@ def set_led(request, user_id):
     details = get_object_or_404(User, id=user_id)
     if request.method == 'POST':
         color = request.POST['color']
-        print(color)
+        power_radio = int(request.POST['power_radio'])
+        led_bright = int(request.POST.get('led_bright'))
+        print( details.led_power,power_radio)
+        if details.led_power == 1 and power_radio == 0:
+            details.led_power = 0
+        elif details.led_power == 0 and power_radio == 0:
+            details.led_power = 1
         details.led_color = color
+        details.led_bright = led_bright
         details.save()
-        f = open('C:\\school\\UPF_WCD\\led.txt', 'w') #led 색상 작성
-        f.write(color)
-        f.close()
+        f_color = open('C:\\school\\UPF_WCD\\led_color.txt', 'w') #led 색상 작성
+        f_power = open('C:\\school\\UPF_WCD\\led_power.txt', 'w') #led 전원
+        f_bright = open('C:\\school\\UPF_WCD\\led_bright.txt', 'w') #led 밝기
+        color = '0x'+color
+        f_color.write(color)
+        f_power.write(str(power_radio))
+        f_bright.write(str(led_bright))
+        f_color.close()
+        f_power.close()
+        f_bright.close()
         return render(request, 'set_led.html', {'details' : details})
     else :
         return render(request, 'set_led.html', {'details' : details})
