@@ -113,9 +113,8 @@ def write_diary(request, t_month, t_day, user_id=id):
     rdr = csv.reader(f)
     emo = []
     for line in rdr:
-        emo.append(line[0]) #불러온 데이터 중 감정만 입력
+        emo.append(line[0]) #불러온 데이터 중 감정만 입력, 이건 데이터에 따라 수정해야함
     f.close()
-    # f = open('C:\Users\tjdgu\Desktop\zz.csv', 'w')
     default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     if len(default_emotion) != 0:
         emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=emo[2], number=default_emotion[len(default_emotion)-1].number+1)
