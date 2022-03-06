@@ -28,6 +28,15 @@ body {
     align-items: center;
     flex-direction: column;
 }
+#back {
+    height: 8%;
+    width: 100%;
+    margin: 0px 0px 980px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(202, 230, 255);
+}
 #setup {
     height: 8%;
     width: 100%;

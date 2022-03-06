@@ -19,7 +19,7 @@ dt_now = datetime.datetime.now()
 def user_login(request):
     if request.method == "POST":
         user_id = request.POST["user_id"]
-        user_password = request.POST["user_password"]
+        user_password = '1'
         user = authenticate(username = user_id, password = user_password)
         
         if user is not  None:
@@ -36,14 +36,15 @@ def user_signup(request):
     if request.method == "POST" :
         user = User.objects.create_user(
             username = request.POST["user_id"],
-            password = request.POST["user_password"],
+            password = '1',
         )
         user.save()
         return render(request, 'finish_signup.html')
     return render(request, 'signup.html')
 
 def home(request):
-    return render(request, 'home.html',{'dt_now':dt_now})
+    user = request.user
+    return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
 
 def mypage(request, user_id=id):
     details = get_object_or_404(User, id=user_id)

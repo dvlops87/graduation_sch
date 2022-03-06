@@ -26,10 +26,12 @@ input{
 }
 #back {
     height: 8%;
-    width: 20%;
+    width: 100%;
+    margin: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(202, 230, 255);
 }
 #login_box {
     width: 80%;
@@ -98,3 +100,20 @@ input{
     margin-left: 79.5%;
 }
 #password_check_button:hover {cursor: pointer;}
+
+#AMPM {
+    font-size: 22px;
+    width: 90px;
+    height: 40px;
+}
+#hours {
+    font-size: 22px;
+    width: 90px;
+    height: 40px;
+    margin: 0px 15px;
+}
+#minutes {
+    font-size: 22px;
+    width: 90px;
+    height: 40px;
+}

@@ -27,6 +27,7 @@ input{
 #back {
     height: 8%;
     width: 20%;
+    margin: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -98,3 +99,23 @@ input{
     margin-left: 79.5%;
 }
 #password_check_button:hover {cursor: pointer;}
+.color_div {
+    display: flex;
+    justify-content: center;
+    padding: 7px 0px 0px 0px;
+    width: 100%;
+    height: 11%;
+}
+.color_div:active {
+    color:white
+}
+.color_one {
+    margin-top: 20px;
+    background-color: #597cd4;
+}
+.color_two {
+    background-color: #a2f0a6;
+}
+.color_thr {
+    background-color: #946c52;
+}
