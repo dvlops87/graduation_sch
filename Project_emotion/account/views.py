@@ -11,6 +11,7 @@ import datetime
 import subprocess
 import csv
 from django.db.models import Q
+import datetime
 
 
 dt_now = datetime.datetime.now()
@@ -44,6 +45,7 @@ def user_signup(request):
 
 def home(request):
     user = request.user
+
     return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
 
 def mypage(request, user_id=id):
@@ -106,21 +108,26 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
     return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
 def write_diary(request, t_month, t_day, user_id=id):
-    subprocess.run('start C:\\school\\UPF_WCD\\tt.txt', shell=True) # 동영상 촬영 프로그램 실행
-    # subprocess.run('python3 (주소 입력)', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python \\home\\choi\\test\\main.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
-    f = open('C:\\Users\\tjdgu\\Desktop\\z.csv', 'r', encoding='utf-8') # 저장된 감정 판단
+    now = datetime.datetime.now()
+    nowDate = now.strftime('%Y-%m-%d')
+    nowTime = now.strftime('%H%M')
+    file_name = nowDate+'_'+nowTime
+
     # f = open('주소 입력', 'r', encoding='utf-8') # 저장된 감정 판단
+    f = open('\\home\\choi\\test\\z.csv', 'r', encoding='utf-8') # 저장된 감정 판단
     rdr = csv.reader(f)
     emo = []
     for line in rdr:
         emo.append(line[0]) #불러온 데이터 중 감정만 입력, 이건 데이터에 따라 수정해야함
     f.close()
+
     default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     if len(default_emotion) != 0:
-        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=emo[2], number=default_emotion[len(default_emotion)-1].number+1)
+        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=emo[2], number=default_emotion[len(default_emotion)-1].number+1,file_name=file_name)
     else:
-        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=emo[2])
+        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=emo[2], file_name=file_name)
     emotions.save()
     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     sum_em = 0
@@ -142,11 +149,11 @@ def write_diary(request, t_month, t_day, user_id=id):
 def delete_diary(request, user_id,emotion_id, emotion_num):
     t_month=dt_now.month
     t_day=dt_now.day
-    subprocess.run('start C:\\school\\UPF_WCD\\tt.txt', shell=True) # 동영상 삭제
-    # subprocess.run('rm (주소 입력)', shell=True) # 동영상 삭제
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
+    subprocess.run('rm \\media\\choi\\flower\\videos\\'+emotions.file_name, shell=True) # 동영상 삭제
     emotions.delete()
+
     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     sum_em = 0
     for em in new_emotions :
@@ -167,8 +174,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
 def view_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('start C:\\school\\UPF_WCD\\tt.txt', shell=True) # 동영상 보기
-    # subprocess.run('mplayer (주소 입력)', shell=True) # 동영상 보기
+    subprocess.run('mplayer /media/choi/flower/videos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
