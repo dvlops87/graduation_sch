@@ -174,7 +174,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
 def view_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('mplayer ../../../../media/choi/flower1/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('mplayer /media/choi/flower1/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
