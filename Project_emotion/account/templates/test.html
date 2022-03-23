@@ -3,10 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Write</title>
 </head>
 <body>
+    <script>
+        $(function(){
+            var set_time = document.getElementById("alarm_time_none").innerHTML;
+            var bool = document.getElementById("alarm_bool_none").innerHTML;
+            console.log('set_time : ',set_time);
+
+            function set_alram() {
+                var now = new Date();   //현재시간
+                
+                hour = now.getHours()   //현재 시간 중 시간.
+                minute = now.getMinutes();
+                if((hour+"").length < 2){
+                    hour="0"+hour;      
+                }
+                if ((minute+"").length < 2){
+                    minute="0"+minute;
+                }
+                today = hour+ "" +minute;      //오늘 날짜 완성.
+                console.log('today : ',today)         
+                // 시간비교
+                if ((eval(today) == eval(set_time)) && bool =='False')  {  
+                     function1();
+                }
+            }
+            set_alram();
+            setInterval(set_alram, 60000); // 1분마다 실행
+
+            function function1(){
+                alert('알람이 울립니다.')
+                location.reload();
+            }
+        })
+    </script>
+    
+    <div id="alarm_bool_none" style="display: none;">{{user.alram_ring}}</div>
+    {% if user.alram_minute < 10 %}
+    <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}0{{user.alram_minute}}</div>
+    {% else %}
+    <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
+    {% endif %}
+
     <h1>달력 보기</h1>
     <a href="{% url 'calender' details.id t_month t_day %}">감정 달력</a>
 </body>

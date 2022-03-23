@@ -32,11 +32,47 @@
             }
             clock();
             setInterval(clock, 1000); // 1초마다 실행
+            
+            var set_time = document.getElementById("alarm_time_none").innerHTML;
+            var bool = document.getElementById("alarm_bool_none").innerHTML;
+            console.log('set_time : ',set_time);
+
+            function set_alram() {
+                var now = new Date();   //현재시간
+                
+                hour = now.getHours()   //현재 시간 중 시간.
+                minute = now.getMinutes();
+                if((hour+"").length < 2){
+                    hour="0"+hour;      
+                }
+                if ((minute+"").length < 2){
+                    minute="0"+minute;
+                }
+                today = hour+ "" +minute;      //오늘 날짜 완성.
+                console.log('today : ',today)         
+                // 시간비교
+                if ((eval(today) == eval(set_time)) && bool =='False')  {  
+                     function1();
+                }
+            }
+            set_alram();
+            setInterval(set_alram, 60000); // 1분마다 실행
+
+            function function1(){
+                alert('알람이 울립니다.')
+                location.reload();
+            }
         })
             function backHome(){
                 window.location.href= "localhost:8000/home/";
             }
     </script>
+    <div id="alarm_bool_none" style="display: none;">{{user.alram_ring}}</div>
+    {% if user.alram_minute < 10 %}
+    <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}0{{user.alram_minute}}</div>
+    {% else %}
+    <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
+    {% endif %}
     <div id="container">
         <div id="mood_box">
             <div id="setup">

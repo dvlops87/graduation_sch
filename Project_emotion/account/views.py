@@ -1,4 +1,4 @@
-import numbers
+import numbers ,json, datetime, csv, subprocess
 from tkinter.tix import Tree
 from tracemalloc import get_object_traceback
 from django.shortcuts import render, redirect, get_object_or_404
@@ -7,11 +7,9 @@ from .models import User, emotion, calender_emotion
 from django.contrib import auth
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse, JsonResponse
-import datetime
-import subprocess
-import csv
 from django.db.models import Q
-import datetime
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 dt_now = datetime.datetime.now()
@@ -44,12 +42,34 @@ def user_signup(request):
     return render(request, 'signup.html')
 
 def home(request):
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
     user = request.user
+    user = get_object_or_404(User, id=user.id)
+    if user.alram_hour == now_hour and user.alram_minute == now_minute:
+        user.alram_ring = True
+        print('성공')
+        user.save()
+    else:
+        user.alram_ring = False
+        user.save()
 
     return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
 
 def mypage(request, user_id=id):
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
     details = get_object_or_404(User, id=user_id)
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
+
     if request.method == "POST":
         now_password = request.POST.get("password")
         if check_password(now_password, details.password):
@@ -84,7 +104,17 @@ def checkUsername(request):
     return JsonResponse(result)
 
 def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
     details = get_object_or_404(User, id=user_id)
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
     try :
         emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     except emotion.DoesNotExist:
@@ -110,7 +140,18 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
 def write_diary(request, t_month, t_day, user_id=id):
     subprocess.run('python /home/choi/test/main.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
+    
     now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
+
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
@@ -147,9 +188,21 @@ def write_diary(request, t_month, t_day, user_id=id):
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
 
 def delete_diary(request, user_id,emotion_id, emotion_num):
+    
+    details = get_object_or_404(User, id=user_id)
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
+
     t_month=dt_now.month
     t_day=dt_now.day
-    details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
     subprocess.run('rm -rf /media/choi/flower1/work/viedeos/'+emotions.file_name, shell=True) # 동영상 삭제
     emotions.delete()
@@ -173,6 +226,17 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
 
 def view_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
+
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
     subprocess.run('mplayer /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
@@ -181,6 +245,17 @@ def view_diary(request, user_id,emotion_id, emotion_num):
 
 def set_timer(request, user_id):
     details = get_object_or_404(User, id=user_id)
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
+
     if request.method == 'POST':
         ampm = request.POST['AMPM']
         hour = int(request.POST['hour'])
@@ -204,12 +279,25 @@ def set_timer(request, user_id):
 
 def set_led(request, user_id):
     details = get_object_or_404(User, id=user_id)
+    now = datetime.datetime.now()
+    now_hour = now.hour
+    now_minute = now.minute
+    if details.alram_hour == now_hour and details.alram_minute == now_minute:
+        details.alram_ring = True
+        print('성공')
+        details.save()
+    else:
+        details.alram_ring = False
+        details.save()
+
     if request.method == 'POST':
         color = request.POST['color']
         power_radio = int(request.POST['power_radio'])
         led_bright = int(request.POST.get('led_bright'))
         print( details.led_power,power_radio)
-        if details.led_power == 1 and power_radio == 0:
+        if power_radio == 1:
+            details.led_power=1
+        elif details.led_power == 1 and power_radio == 0:
             details.led_power = 0
         elif details.led_power == 0 and power_radio == 0:
             details.led_power = 1
@@ -229,3 +317,13 @@ def set_led(request, user_id):
         return render(request, 'set_led.html', {'details' : details})
     else :
         return render(request, 'set_led.html', {'details' : details})
+
+@csrf_exempt
+def start_led(request):
+    jsonObject = json.loads(request.body)
+    subprocess.run(['C:\\school\\UPF_WCD\\led_color.txt'],shell=True) # LED 알람 실행
+    # subprocess.run(['python 파일명'],shell=True) # LED 알람 실행
+    data = {
+        "success": '성공',
+    }
+    return JsonResponse(data)

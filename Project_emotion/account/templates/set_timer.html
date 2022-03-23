@@ -5,10 +5,57 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <link rel="stylesheet" href="{% static 'css/set_timer.css' %}">
     <title>알람 설정</title>
 </head>
 <body>
+    <script>
+        $(function(){
+            var bool = document.getElementById("alarm_bool_none").innerHTML;
+            var set_time = document.getElementById("alarm_time_none").innerHTML;
+            console.log('set_time : ',set_time);
+
+            function set_alram() {
+                var now = new Date();   //현재시간
+                
+                hour = now.getHours()   //현재 시간 중 시간.
+                minute = now.getMinutes();
+                if((hour+"").length < 2){
+                    hour="0"+hour;      
+                }
+                if ((minute+"").length < 2){
+                    minute="0"+minute;
+                }
+                today = hour+ "" +minute;      //오늘 날짜 완성.
+                console.log('today : ',today)         
+                // 시간비교
+                if ((eval(today) == eval(set_time)) && bool =='False')  {  
+                     function1();
+                }
+            }
+            set_alram();
+            setInterval(set_alram, 60000); // 1분마다 실행
+
+            function function1(){
+                data = 'run led'
+                $.ajax({
+                    type:'POST',
+                    url:'start_led/',
+                    data:JSON.stringify(data),
+                    success:function(json){
+                        console.log("data pass success",json);
+                    },
+                    error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); 
+                    }
+                })
+                alert('알람이 울립니다.')
+                location.reload();
+            }
+        })
+    </script>
+    <div id="alarm_bool_none" style="display: none;">{{user.alram_ring}}</div>
     <div id="container">
         <div id="back">
             <a href="http://127.0.0.1:8000/home/">back</a>
@@ -20,7 +67,13 @@
             <div id="login">
                 <form action="{% url 'set_timer' details.id %}" method="POST">
                     {% csrf_token %}
+                    {% if details.alram_minute < 10 %}
+                    <label>설정된 알람 시간 : {{details.alram_hour}}시 0{{details.alram_minute}}분</label>
+                    <div id="alarm_time_none" style="display: none;">{{details.alram_hour}}0{{details.alram_minute}}</div>
+                    {% else %}
                     <label>설정된 알람 시간 : {{details.alram_hour}}시 {{details.alram_minute}}분</label>
+                    <div id="alarm_time_none" style="display: none;">{{details.alram_hour}}{{details.alram_minute}}</div>
+                    {% endif %}
                     <br>
                     <select name = "AMPM" id="AMPM">
                         <option value = "PM" selected>오후</option>
