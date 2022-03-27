@@ -268,7 +268,7 @@ def set_timer(request, user_id):
         details.alram_minute = minute
         print(hour, minute)
         details.save()
-        f = open('C:\\school\\UPF_WCD\\time.txt', 'w') #알람 시간 작성
+        f = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
         time = str(hour) +  str(minute)
         f.write(time)
         f.close()
@@ -304,9 +304,9 @@ def set_led(request, user_id):
         details.led_color = color
         details.led_bright = led_bright
         details.save()
-        f_color = open('C:\\school\\UPF_WCD\\led_color.txt', 'w') #led 색상 작성
-        f_power = open('C:\\school\\UPF_WCD\\led_power.txt', 'w') #led 전원
-        f_bright = open('C:\\school\\UPF_WCD\\led_bright.txt', 'w') #led 밝기
+        f_color = open('/home/choi/led/color.txt', 'w') #led 색상 작성
+        f_power = open('/home/choi/led/onoff.txt', 'w') #led 전원
+        f_bright = open('/home/choi/led/brightness.txt', 'w') #led 밝기
         color = '0x'+color
         f_color.write(color)
         f_power.write(str(power_radio))
@@ -321,8 +321,7 @@ def set_led(request, user_id):
 @csrf_exempt
 def start_led(request):
     jsonObject = json.loads(request.body)
-    subprocess.run(['C:\\school\\UPF_WCD\\led_color.txt'],shell=True) # LED 알람 실행
-    # subprocess.run(['python 파일명'],shell=True) # LED 알람 실행
+    subprocess.run(['python /home/choi/led/main_alert.py'],shell=True) # LED 알람 실행
     data = {
         "success": '성공',
     }
