@@ -204,7 +204,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
     t_month=dt_now.month
     t_day=dt_now.day
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('rm -rf /media/choi/flower1/work/viedeos/'+emotions.file_name, shell=True) # 동영상 삭제
+    subprocess.run('rm -rf /media/choi/flower1/work/plus/'+emotions.file_name, shell=True) # 동영상 삭제
     emotions.delete()
 
     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
