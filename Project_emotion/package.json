@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "simple-keyboard": "^3.4.55"
+    "simple-keyboard": "^3.4.65"
   },
   "type": "module"
 }

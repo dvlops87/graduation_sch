@@ -138,10 +138,13 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
     return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
 def write_diary(request, t_month, t_day, user_id=id):
+    now = datetime.datetime.now()
+    nowDate = now.strftime('%Y-%m-%d')
+    nowTime = now.strftime('%H%M')
+    file_name = nowDate+'_'+nowTime
     subprocess.run('python /home/choi/test/main.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
-    now = datetime.datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
@@ -152,9 +155,6 @@ def write_diary(request, t_month, t_day, user_id=id):
         details.alram_ring = False
         details.save()
 
-    nowDate = now.strftime('%Y-%m-%d')
-    nowTime = now.strftime('%H%M')
-    file_name = nowDate+'_'+nowTime
 
     # f = open('주소 입력', 'r', encoding='utf-8') # 저장된 감정 판단
     f = open('/home/choi/test/z.csv', 'r', encoding='utf-8') # 저장된 감정 판단
@@ -238,7 +238,7 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('mplayer /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('mplayer /media/choi/flower1/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
