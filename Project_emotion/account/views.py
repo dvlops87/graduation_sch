@@ -238,7 +238,7 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('mplayer /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('vlc /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
@@ -260,18 +260,23 @@ def set_timer(request, user_id):
         ampm = request.POST['AMPM']
         hour = int(request.POST['hour'])
         minute = request.POST['minute']
+        sound = request.POST['alarm_sound']
         if ampm == 'PM':
             hour +=12
         elif hour <10 :
             hour = '0'+str(hour)
         details.alram_hour = hour
         details.alram_minute = minute
-        print(hour, minute)
+        details.alarm_sound = sound
+        print(hour, minute, sound)
         details.save()
-        f = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
-        time = str(hour) +  str(minute)
-        f.write(time)
+        f = open('/home/choi/led/sound.txt', 'w') #알람 시간 작성
+        f.write(sound)
         f.close()
+        f_time = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
+        time = str(hour) +  str(minute)
+        f_time.write(time)
+        f_time.close()
         return render(request, 'set_timer.html', {'details' : details})
     else :
         return render(request, 'set_timer.html', {'details' : details})
