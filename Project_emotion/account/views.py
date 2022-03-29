@@ -267,10 +267,11 @@ def set_timer(request, user_id):
             hour = '0'+str(hour)
         details.alram_hour = hour
         details.alram_minute = minute
-        details.alarm_sound = sound
+        sound = '0.'+sound
+        details.alram_sound = sound
         print(hour, minute, sound)
         details.save()
-        f = open('/home/choi/led/sound.txt', 'w') #알람 시간 작성
+        f = open('/home/choi/led/sound.txt', 'w') #알람 volume 작성
         f.write(sound)
         f.close()
         f_time = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
@@ -326,6 +327,7 @@ def set_led(request, user_id):
 @csrf_exempt
 def start_led(request):
     jsonObject = json.loads(request.body)
+    print('ok')
     subprocess.run(['python /home/choi/led/main_alert.py'],shell=True) # LED 알람 실행
     data = {
         "success": '성공',
