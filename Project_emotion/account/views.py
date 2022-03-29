@@ -260,16 +260,16 @@ def set_timer(request, user_id):
         ampm = request.POST['AMPM']
         hour = int(request.POST['hour'])
         minute = request.POST['minute']
-        sound = request.POST['alarm_sound']
+        sound = request.POST['alram_sound']
         if ampm == 'PM':
             hour +=12
         elif hour <10 :
             hour = '0'+str(hour)
         details.alram_hour = hour
         details.alram_minute = minute
-        sound = '0.'+sound
         details.alram_sound = sound
         print(hour, minute, sound)
+        sound = '0.'+sound
         details.save()
         f = open('/home/choi/led/sound.txt', 'w') #알람 volume 작성
         f.write(sound)
