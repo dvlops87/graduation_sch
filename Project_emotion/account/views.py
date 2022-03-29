@@ -238,7 +238,7 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('vlc /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('xdg-open /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
@@ -290,7 +290,6 @@ def set_led(request, user_id):
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -328,7 +327,7 @@ def set_led(request, user_id):
 def start_led(request):
     jsonObject = json.loads(request.body)
     print('ok')
-    subprocess.run(['python /home/choi/led/main_alert.py'],shell=True) # LED 알람 실행
+    subprocess.run('python /home/choi/led/main_alert.py',shell=True) # LED 알람 실행
     data = {
         "success": '성공',
     }
