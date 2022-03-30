@@ -269,7 +269,10 @@ def set_timer(request, user_id):
         details.alram_minute = minute
         details.alram_sound = sound
         print(hour, minute, sound)
-        sound = '0.'+sound
+        if sound < 11 :
+            sound = '0.0'+sound
+        else :
+            sound = '0.'+sound
         details.save()
         f = open('/home/choi/led/sound.txt', 'w') #알람 volume 작성
         f.write(sound)
@@ -315,7 +318,10 @@ def set_led(request, user_id):
         color = '0x'+color
         f_color.write(color)
         f_power.write(str(power_radio))
-        led_bright = '0.'+str(led_bright)
+        if int(led_bright) < 11:
+            led_bright = '0.0'+str(led_bright)
+        else :
+            led_bright = '0.'+str(led_bright)
         f_bright.write(str(led_bright))
         f_color.close()
         f_power.close()
