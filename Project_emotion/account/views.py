@@ -307,7 +307,7 @@ def set_led(request, user_id):
         elif details.led_power == 0 and power_radio == 0:
             details.led_power = 1
         details.led_color = color
-        details.led_bright = '0.'+str(led_bright)
+        details.led_bright = led_bright
         details.save()
         f_color = open('/home/choi/led/color.txt', 'w') #led 색상 작성
         f_power = open('/home/choi/led/onoff.txt', 'w') #led 전원
@@ -315,6 +315,7 @@ def set_led(request, user_id):
         color = '0x'+color
         f_color.write(color)
         f_power.write(str(power_radio))
+        led_bright = '0.'+str(led_bright)
         f_bright.write(str(led_bright))
         f_color.close()
         f_power.close()
