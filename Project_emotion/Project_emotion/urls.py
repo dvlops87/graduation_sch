@@ -31,8 +31,8 @@ urlpatterns = [
     path('delete_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.delete_diary, name="delete_diary"),
     path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
     path('set_timer/<int:user_id>', user.set_timer, name="set_timer"),
-    path('set_led/<int:user_id>', user.set_led, name="set_led"),
-    path('set_timer/start_led/', user.start_led, name="start_led"),
+    path('set_led/<int:user_id>/', user.set_led, name="set_led"),
+    path('start_led/', user.start_led, name="start_led"),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

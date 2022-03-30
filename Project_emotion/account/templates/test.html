@@ -40,7 +40,7 @@
                 data = 'run led'
                 $.ajax({
                     type:'POST',
-                    url:'start_led/',
+                    url:"{% url 'start_led' %}",
                     data:JSON.stringify(data),
                     success:function(json){
                         console.log("data pass success",json);

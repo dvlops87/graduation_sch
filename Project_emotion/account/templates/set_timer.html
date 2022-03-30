@@ -41,7 +41,7 @@
                 data = 'run led'
                 $.ajax({
                     type:'POST',
-                    url:'start_led/',
+                    url:"{% url 'start_led' %}",
                     data:JSON.stringify(data),
                     success:function(json){
                         console.log("data pass success",json);
@@ -80,7 +80,6 @@
                         <option value = "AM">오전</option>
                      </select>
                     <select name = "hour" id="hours">
-                        <option value = "{{details.alram_hour}}" selected>{{details.alram_hour}}</option>
                         <option value = "01">01</option>
                         <option value = "02">02</option>
                         <option value = "03">03</option>
@@ -92,11 +91,10 @@
                         <option value = "09">09</option>
                         <option value = "10">10</option>
                         <option value = "11">11</option>
-                        <option value = "12">12</option>
+                        <option value = "12" selected>12</option>
                      </select>
                      <select name = "minute" id="minutes">
-                         <option value = "{{details.alram_minute}}" selected>{{details.alram_minute}}</option>
-                         <option value = "00">00</option>
+                         <option value = "00" selected>00</option>
                          <option value = "05">05</option>
                          <option value = "10">10</option>
                          <option value = "15">15</option>
