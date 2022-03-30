@@ -238,7 +238,7 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('xdg-open /media/choi/flower1/work/viedeos/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('xdg-open /media/choi/flower1/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
