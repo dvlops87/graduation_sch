@@ -38,7 +38,20 @@
             set_alram();
             setInterval(set_alram, 60000); // 1분마다 실행
 
+            
             function function1(){
+                data = 'run led'
+                $.ajax({
+                    type:'POST',
+                    url:'start_led/',
+                    data:JSON.stringify(data),
+                    success:function(json){
+                        console.log("data pass success",json);
+                    },
+                    error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); 
+                    }
+                })
                 alert('알람이 울립니다.')
                 location.reload();
             }
