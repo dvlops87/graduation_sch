@@ -327,8 +327,7 @@ def set_led(request, user_id):
 def start_led(request):
     jsonObject = json.loads(request.body)
     print('ok')
-    subprocess.run('python /home/choi/led/main_alert.py',shell=True) # LED 알람 실행
-    subprocess.run('python /home/choi/led/alert_kill.py',shell=True) # LED 알람 실행
+    subprocess.run('python /home/choi/led/main_alert.py & python /home/choi/led/alert_kill.py',shell=True) # LED 알람 실행
     data = {
         "success": '성공',
     }
