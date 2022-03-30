@@ -315,6 +315,7 @@ def set_led(request, user_id):
         color = '0x'+color
         f_color.write(color)
         f_power.write(str(power_radio))
+        led_bright = '0.'+str(led_bright)
         f_bright.write(str(led_bright))
         f_color.close()
         f_power.close()
