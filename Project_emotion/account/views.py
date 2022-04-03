@@ -269,7 +269,7 @@ def set_timer(request, user_id):
         details.alram_minute = minute
         details.alram_sound = sound
         print(hour, minute, sound)
-        if sound < 11 :
+        if sound < 10 :
             sound = '0.0'+sound
         else :
             sound = '0.'+sound
@@ -318,7 +318,7 @@ def set_led(request, user_id):
         color = '0x'+color
         f_color.write(color)
         f_power.write(str(power_radio))
-        if int(led_bright) < 11:
+        if int(led_bright) < 10:
             led_bright = '0.0'+str(led_bright)
         else :
             led_bright = '0.'+str(led_bright)
