@@ -9,6 +9,7 @@ from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 
 
@@ -142,7 +143,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
-    subprocess.run('python /home/choi/test/main.py', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python /home/choi/test/main.py & python /home/choi/test/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
     now_hour = now.hour
@@ -154,6 +155,19 @@ def write_diary(request, t_month, t_day, user_id=id):
     else:
         details.alram_ring = False
         details.save()
+
+
+    with open('/home/choi/test/FaceEmotion_ID/emotion.json', 'r') as f:
+
+        json_data = json.load(f)
+
+
+    print("감정 판단 결과: ")
+    print(json.dumps(json_data, indent="\t") )
+
+
+    #여기에 감정 종합하는걸 추가해야함
+
 
 
     # f = open('주소 입력', 'r', encoding='utf-8') # 저장된 감정 판단
