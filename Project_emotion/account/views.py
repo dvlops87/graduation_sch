@@ -260,27 +260,27 @@ def set_timer(request, user_id):
         ampm = request.POST['AMPM']
         hour = int(request.POST['hour'])
         minute = request.POST['minute']
-        sound = request.POST['alram_sound']
+        sound = int(request.POST['alram_sound'])
         if ampm == 'PM':
             hour +=12
         elif hour <10 :
             hour = '0'+str(hour)
         details.alram_hour = hour
         details.alram_minute = minute
-        details.alram_sound = sound
-        print(hour, minute, sound)
-        if sound < 10 :
-            sound = '0.0'+sound
-        else :
-            sound = '0.'+sound
+        details.alram_sound = int(sound)
         details.save()
-        f = open('/home/choi/led/sound.txt', 'w') #알람 volume 작성
-        f.write(sound)
-        f.close()
-        f_time = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
-        time = str(hour) +  str(minute)
-        f_time.write(time)
-        f_time.close()
+        print(hour, minute, sound)
+        if float(sound) < 10 :
+            sound = '0.0'+str(sound)
+        else :
+            sound = '0.'+str(sound)
+        # f = open('/home/choi/led/sound.txt', 'w') #알람 volume 작성
+        # f.write(sound)
+        # f.close()
+        # f_time = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
+        # time = str(hour) +  str(minute)
+        # f_time.write(time)
+        # f_time.close()
         return render(request, 'set_timer.html', {'details' : details})
     else :
         return render(request, 'set_timer.html', {'details' : details})
@@ -301,7 +301,7 @@ def set_led(request, user_id):
     if request.method == 'POST':
         color = request.POST['color']
         power_radio = int(request.POST['power_radio'])
-        led_bright = int(request.POST.get('led_bright'))
+        led_bright = request.POST.get('led_bright')
         print( details.led_power,power_radio)
         if power_radio == 1:
             details.led_power=1
@@ -312,20 +312,20 @@ def set_led(request, user_id):
         details.led_color = color
         details.led_bright = led_bright
         details.save()
-        f_color = open('/home/choi/led/color.txt', 'w') #led 색상 작성
-        f_power = open('/home/choi/led/onoff.txt', 'w') #led 전원
-        f_bright = open('/home/choi/led/brightness.txt', 'w') #led 밝기
-        color = '0x'+color
-        f_color.write(color)
-        f_power.write(str(power_radio))
-        if int(led_bright) < 10:
-            led_bright = '0.0'+str(led_bright)
-        else :
-            led_bright = '0.'+str(led_bright)
-        f_bright.write(str(led_bright))
-        f_color.close()
-        f_power.close()
-        f_bright.close()
+        # f_color = open('/home/choi/led/color.txt', 'w') #led 색상 작성
+        # f_power = open('/home/choi/led/onoff.txt', 'w') #led 전원
+        # f_bright = open('/home/choi/led/brightness.txt', 'w') #led 밝기
+        # color = '0x'+color
+        # f_color.write(color)
+        # f_power.write(str(power_radio))
+        # if int(led_bright) < 10:
+        #     led_bright = '0.0'+str(led_bright)
+        # else :
+        #     led_bright = '0.'+str(led_bright)
+        # f_bright.write(led_bright)
+        # f_color.close()
+        # f_power.close()
+        # f_bright.close()
         return render(request, 'set_led.html', {'details' : details})
     else :
         return render(request, 'set_led.html', {'details' : details})

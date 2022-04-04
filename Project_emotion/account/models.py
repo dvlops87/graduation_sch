@@ -3,14 +3,13 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class User(AbstractUser):
-    nickname = models.CharField(max_length=40,default='')
     alram_hour = models.IntegerField(default=12)
     alram_minute = models.IntegerField(default=0)
     alram_ring = models.BooleanField(default=False)
-    alram_sound = models.FloatField(default=0)
+    alram_sound = models.IntegerField(default=0)
     led_color = models.CharField(max_length=40,default='')
     led_power = models.IntegerField(default=0)
-    led_bright = models.FloatField(default=5)
+    led_bright = models.IntegerField(default=5)
     def __str__(self):
         return str(self.username)
 
