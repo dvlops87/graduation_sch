@@ -143,7 +143,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
-    subprocess.run('python /home/choi/test/main.py & python /home/choi/test/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python /home/choi/test/main.py && python /home/choi/test/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
     now_hour = now.hour
