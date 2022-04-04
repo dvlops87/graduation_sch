@@ -176,8 +176,8 @@
                 <br>
                 {% if emotions %}
                 {% for emotion in emotions %}
-                <a href="{% url 'view_diary' details.id emotion.id emotion.number %}">{{emotion.number}}+1 번째 일기 보기</a>
-                <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}">{{emotion.number}}+1 번째 일기 삭제</a>
+                <a href="{% url 'view_diary' details.id emotion.id emotion.number %}">{{emotion.number}} 번째 일기 보기</a>
+                <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}">{{emotion.number}} 번째 일기 삭제</a>
                 <br>
                 {% endfor %}
                 {% endif %}
