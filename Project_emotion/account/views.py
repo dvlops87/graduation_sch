@@ -16,15 +16,18 @@ dt_now = datetime.datetime.now()
 
 # 최근 10개 일기 평가 -> 나무 설정
 def emotion_stack(u_id, count):
-    emotions = emotion.objects.get(user_id = u_id).order_by(-id)
-    emotions = emotions[:count] # 최근 일기 count개 가져오기
-    sum_emotion = [0 for i in range(7)]
-    for emotion_one in emotions : # 최근 10개 일기 중 한 개
-        i=0
-        for emo in emotion_one.sum_emotion : # Model의 JSON필드, emo는 key 값
-            sum_emotion[i] = emotion.sum_emotion[emo]['howmany']
-            i += 1
-    print("최근 ",count,"개 일기 평가 : ",sum_emotion)
+    try:
+        emotions = emotion.objects.get(user_id = u_id).order_by(-id)
+        emotions = emotions[:count] # 최근 일기 count개 가져오기
+        sum_emotion = [0 for i in range(7)]
+        for emotion_one in emotions : # 최근 10개 일기 중 한 개
+            i=0
+            for emo in emotion_one.sum_emotion : # Model의 JSON필드, emo는 key 값
+                sum_emotion[i] = emotion.sum_emotion[emo]['howmany']
+                i += 1
+        print("최근 ",count,"개 일기 평가 : ",sum_emotion)
+    except:
+        print("아직 일기가 하나도 없습니다.")
 
 # Create your views here.
 def user_login(request):
