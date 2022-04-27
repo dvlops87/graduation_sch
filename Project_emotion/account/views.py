@@ -178,7 +178,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
-    subprocess.run('python /home/lhw/stt/main.py && python /home/lhw/test/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python /home/lhw/stt/main.py && python /home/lhw/stt/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
     now_hour = now.hour
@@ -192,14 +192,14 @@ def write_diary(request, t_month, t_day, user_id=id):
         details.save()
 
 
-    with open('/home/lhw/test/FaceEmotion_ID/emotion.json', 'r') as f:
-        json_data = json.load(f)
-    print("감정 판단 결과: ")
-    print(json.dumps(json_data, indent="\t") )
+    # with open('/home/lhw/stt/FaceEmotion_ID/emotion.json', 'r') as f:
+    #     json_data = json.load(f)
+    # print("감정 판단 결과: ")
+    # print(json.dumps(json_data, indent="\t") )
 
 
     #나중에 주소 다시 설정
-    with open('C://Users//tjdgu//Desktop//emotion.json', 'r') as fr:
+    with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
         emotion_json_data = json.load(fr)
         max_value = int(emotion_json_data['angry']['howmany'])
         default_emotion = 'angry'
