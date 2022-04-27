@@ -175,7 +175,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
-    subprocess.run('python /home/choi/test/main.py && python /home/choi/test/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python /home/lhw/stt/main.py && python /home/lhw/test/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
     now_hour = now.hour
@@ -189,7 +189,7 @@ def write_diary(request, t_month, t_day, user_id=id):
         details.save()
 
 
-    with open('/home/choi/test/FaceEmotion_ID/emotion.json', 'r') as f:
+    with open('/home/lhw/test/FaceEmotion_ID/emotion.json', 'r') as f:
         json_data = json.load(f)
     print("감정 판단 결과: ")
     print(json.dumps(json_data, indent="\t") )
@@ -281,7 +281,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
     t_month=dt_now.month
     t_day=dt_now.day
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('rm -rf /media/choi/flower/work/plus/'+emotions.file_name, shell=True) # 동영상 삭제
+    subprocess.run('rm -rf /media/lhw/flower/work/plus/'+emotions.file_name, shell=True) # 동영상 삭제
     emotions.delete()
 
     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
@@ -331,7 +331,7 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('xdg-open /media/choi/flower/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('xdg-open /media/lhw/flower/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
@@ -367,10 +367,10 @@ def set_timer(request, user_id):
             sound = '0.0'+str(sound)
         else :
             sound = '0.'+str(sound)
-        f = open('/home/choi/led/sound.txt', 'w') #알람 volume 작성
+        f = open('/home/lhw/led/sound.txt', 'w') #알람 volume 작성
         f.write(sound)
         f.close()
-        f_time = open('/home/choi/led/time.txt', 'w') #알람 시간 작성
+        f_time = open('/home/lhw/led/time.txt', 'w') #알람 시간 작성
         time = str(hour) +  str(minute)
         f_time.write(time)
         f_time.close()
@@ -405,9 +405,9 @@ def set_led(request, user_id):
         details.led_color = color
         details.led_bright = led_bright
         details.save()
-        f_color = open('/home/choi/led/color.txt', 'w') #led 색상 작성
-        f_power = open('/home/choi/led/onoff.txt', 'w') #led 전원
-        f_bright = open('/home/choi/led/brightness.txt', 'w') #led 밝기
+        f_color = open('/home/lhw/led/color.txt', 'w') #led 색상 작성
+        f_power = open('/home/lhw/led/onoff.txt', 'w') #led 전원
+        f_bright = open('/home/lhw/led/brightness.txt', 'w') #led 밝기
         color = '0x'+color
         f_color.write(color)
         f_power.write(str(power_radio))
@@ -427,7 +427,7 @@ def set_led(request, user_id):
 def start_led(request):
     jsonObject = json.loads(request.body)
     print('ok')
-    subprocess.run('python /home/choi/led/main_alert.py & python /home/choi/led/alert_kill.py',shell=True) # LED 알람 실행
+    subprocess.run('python /home/lhw/led/main_alert.py & python /home/lhw/led/alert_kill.py',shell=True) # LED 알람 실행
     data = {
         "success": '성공',
     }
