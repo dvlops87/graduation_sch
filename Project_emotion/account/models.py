@@ -1,3 +1,4 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
@@ -21,6 +22,7 @@ class emotion(models.Model):
     day = models.IntegerField(default=0)
     file_name = models.TextField(default='')
     image = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
+    json_data = models.JSONField(default='{}')
     def __str__(self):
         return str(str(self.month)+'/'+str(self.day))
 
@@ -31,3 +33,25 @@ class calender_emotion(models.Model):
     day = models.IntegerField(default=0)
     def __str__(self) -> str:
         return str(str(self.month)+'/'+str(self.day))
+
+# 모델 만들어서 일기 작성할 때 마다 감정 스택 쌓게 하기 (중립은 제외) (최대 몇 스택??)
+# if len(emotion)%10 == 0
+#   emotion_stack(id)
+
+#   emotions = emotion.object.get(user_id = id).order_by(-id)
+#   emotions = emotions[:10] 최근 10개 가져오기
+#   sum_emotion = [0 for i in range(7)]
+#   for emotion in emotions : # 최근 10개 일기 중 한 개
+#       for emo in emotion.sum_emotion : # Model의 JSON필드, emo는 key 값
+#           sum_emotion[i] = emotion.sum_emotion[emo]['howmany']
+#           i += 1
+#   print(sum_emotion)
+# 
+# 
+# 
+# 
+# 새싹(1일차) 떡잎(5일차) 개화(10일차) 3단계로 나뉜다.
+
+# 회상은 중립 제외 10번 쌓이면 실행
+
+# 도감에 저장되고 없앰

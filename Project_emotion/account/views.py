@@ -12,8 +12,19 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 
 
-
 dt_now = datetime.datetime.now()
+
+# 최근 10개 일기 평가 -> 나무 설정
+def emotion_stack(u_id, count):
+    emotions = emotion.objects.get(user_id = u_id).order_by(-id)
+    emotions = emotions[:count] # 최근 일기 count개 가져오기
+    sum_emotion = [0 for i in range(7)]
+    for emotion_one in emotions : # 최근 10개 일기 중 한 개
+        i=0
+        for emo in emotion_one.sum_emotion : # Model의 JSON필드, emo는 key 값
+            sum_emotion[i] = emotion.sum_emotion[emo]['howmany']
+            i += 1
+    print("최근 ",count,"개 일기 평가 : ",sum_emotion)
 
 # Create your views here.
 def user_login(request):
@@ -55,7 +66,7 @@ def home(request):
     else:
         user.alram_ring = False
         user.save()
-
+    emotion_stack(user.id, 10)
     return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
 
 def mypage(request, user_id=id):
@@ -141,21 +152,21 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
     if sum(sum_em) == 0:
         t_emotion ="아직 없습니다."
     else :
-        total_emotion = max(sum_em)
+        total_emotion = sum_em.index(max(sum_em))
         if total_emotion == 0:
-            t_emotion ="중립"
-        elif total_emotion == 1:
             t_emotion ="화남"
-        elif total_emotion == 2:
+        elif total_emotion == 1:
             t_emotion ="역겨움"
-        elif total_emotion == 3:
+        elif total_emotion == 2:
             t_emotion ="두려움"
-        elif total_emotion == 4:
+        elif total_emotion == 3:
             t_emotion ="행복함"
-        elif total_emotion == 5:
+        elif total_emotion == 4:
             t_emotion ="슬픔"
-        elif total_emotion == 6:
+        elif total_emotion == 5:
             t_emotion ="놀람"
+        elif total_emotion == 6:
+            t_emotion ="중립"
 
     return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
@@ -216,9 +227,9 @@ def write_diary(request, t_month, t_day, user_id=id):
 
     default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     if len(default_emotion) != 0:
-        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, number=default_emotion[len(default_emotion)-1].number+1,file_name=file_name)
+        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, number=default_emotion[len(default_emotion)-1].number+1,file_name=file_name, json_data=emotion_json_data)
     else:
-        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, file_name=file_name)
+        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, file_name=file_name, json_data=emotion_json_data)
     emotions.save()
     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
     
@@ -242,7 +253,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     if sum(sum_em) == 0:
         total_emotion = 0
     else :
-        total_emotion = max(sum_em)
+        total_emotion = sum_em.index(max(sum_em))
     try :
         c_e = calender_emotion.objects.get(u_id=details, month=t_month, day=t_day)
         c_e.daily_emotion = total_emotion
@@ -270,7 +281,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
     t_month=dt_now.month
     t_day=dt_now.day
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('rm -rf /media/choi/flower1/work/plus/'+emotions.file_name, shell=True) # 동영상 삭제
+    subprocess.run('rm -rf /media/choi/flower/work/plus/'+emotions.file_name, shell=True) # 동영상 삭제
     emotions.delete()
 
     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
@@ -295,7 +306,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
     if sum(sum_em) == 0:
         total_emotion = 0
     else :
-        total_emotion = max(sum_em)
+        total_emotion = sum_em.index(max(sum_em))
 
     try :
         c_e = calender_emotion.objects.get(u_id=details, month=t_month, day=t_day)
@@ -320,7 +331,7 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('xdg-open /media/choi/flower1/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    subprocess.run('xdg-open /media/choi/flower/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
     t_month=dt_now.month
     t_day=dt_now.day
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
