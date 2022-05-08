@@ -85,25 +85,8 @@ def mypage(request, user_id=id):
         details.alram_ring = False
         details.save()
 
-    if request.method == "POST":
-        now_password = request.POST.get("password")
-        if check_password(now_password, details.password):
-            new_password = request.POST.get("new_password")
-            password_check = request.POST.get("password_check")
-            if new_password==password_check:
-                details.set_password(new_password)
-                details.save()
-                print('성공')
-                return render(request, 'mypage.html', {'details':details})
-            else:
-                error = '비밀번호가 일치하지 않습니다.'
-                return render(request, 'mypage.html', {'details':details, 'error':error})
-        else:
-            error = '현재 비밀번호가 올바르지 않습니다'
-            print('실패')
-            return render(request, 'mypage.html', {'details':details,'error':error})
-    else:
-        return render(request, 'mypage.html', {'details':details})
+    
+    return render(request, 'mypage.html', {'details':details})
 
 
 def checkUsername(request):

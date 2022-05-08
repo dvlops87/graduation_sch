@@ -70,29 +70,118 @@
         </div>
         <div id="login_box">
             <div id="login_title">
-                <p>마이 페이지</p>
+                <p>그동안 모았던 꽃들</p>
             </div>
             <div id="login">
-                <form action="{% url 'mypage' details.id %}" method="post">
-                    {% csrf_token %}
-                    <label>아이디 : {{details.username}}</label>
-                    <br>
-                    <label for="now_password" style="margin-right: 31px;">현재 비밀번호</label>
-                    <input type="password" id="password" name="password">
-                    <br>
-                    <label for="new_password" style="margin-right: 54px;">새 비밀번호</label>
-                    <input type="password" id="new_password" name="new_password">
-                    <br>
-                    <label for="password_check">새 비밀번호 확인</label>
-                    <input type="password" id="password_check" name="password_check">
-                    <br>
-                    <input type="submit" id="login_button" style="display: none;">
-                    {% if error %}
-                    {{error}}
-                    {% endif %}
-                </form>
+                <div class="flowers_tag">
+                    <div class="flowers" id="angry_1">
+                        <div class="flower_picture">
+                            <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                    <div class="flowers" id="angry_2">
+                        <div class="flower_picture">
+                            <img src="" id="angry_2_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowers_tag">
+                    <div class="flowers" id="angry_1">
+                        <div class="flower_picture">
+                            <img src="" class="emotion_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                    <div class="flowers" id="angry_2">
+                        <div class="flower_picture">
+                            <img src="" id="angry_2_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowers_tag">
+                    <div class="flowers" id="angry_1">
+                        <div class="flower_picture">
+                            <img src="" class="emotion_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                    <div class="flowers" id="angry_2">
+                        <div class="flower_picture">
+                            <img src="" id="angry_2_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowers_tag">
+                    <div class="flowers" id="angry_1">
+                        <div class="flower_picture">
+                            <img src="" class="emotion_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                    <div class="flowers" id="angry_2">
+                        <div class="flower_picture">
+                            <img src="" id="angry_2_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowers_tag">
+                    <div class="flowers" id="angry_1">
+                        <div class="flower_picture">
+                            <img src="" class="emotion_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                    <div class="flowers" id="angry_2">
+                        <div class="flower_picture">
+                            <img src="" id="angry_2_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flowers_tag">
+                    <div class="flowers" id="angry_1">
+                        <div class="flower_picture">
+                            <img src="" class="emotion_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                    <div class="flowers" id="angry_2">
+                        <div class="flower_picture">
+                            <img src="" id="angry_2_picture">
+                        </div>
+                        <div class="flower_name">
+                            <p>꽃 이름</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <label for="login_button" id="button_box"><div id="button">수정 완료</div></label>
         </div>
     </div>
 </body>
