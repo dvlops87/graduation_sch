@@ -38,6 +38,7 @@ input{
     height: 45%;
     width: 100%;
     margin: 0px;
+    font-size: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,27 +68,30 @@ input{
 
 table {
     clear: both;
+    width: 70%;
+    height: 70%;
+    font-size: 45px;
 }
 th {
-    height: 50px;
+    height: 100px;
     width: 70px;
     background-color:  orange;
 }
 td {
     text-align: center;
-    height: 50px;
+    height: 150px;
     width: 70px;
-    background-color: #FFFDC5;  
+    background-color: #FFFDC5;
 }
 input {
     height: 50px;
     width: 70px;
     border: none;
     background-color:  orange;
-    font-size: 30px;
+    font-size: 45px;
 }
 .year_mon{
-    font-size: 25px;
+    font-size: 45px;
 }
 .colToday{
     background-color: #FFA07A;

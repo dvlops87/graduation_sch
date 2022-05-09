@@ -33,6 +33,7 @@ urlpatterns = [
     path('set_timer/<int:user_id>', user.set_timer, name="set_timer"),
     path('set_led/<int:user_id>/', user.set_led, name="set_led"),
     path('start_led/', user.start_led, name="start_led"),
+    path('flower_detail/<str:flower_info>', user.flower_detail, name="flower_detail"),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

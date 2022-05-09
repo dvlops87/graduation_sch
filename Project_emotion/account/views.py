@@ -3,7 +3,7 @@ from tkinter.tix import Tree
 from tracemalloc import get_object_traceback
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
-from .models import User, emotion, calender_emotion
+from .models import User, emotion, calender_emotion, flower
 from django.contrib import auth
 from django.contrib.auth.hashers import check_password
 from django.http import HttpResponse, JsonResponse
@@ -84,9 +84,9 @@ def mypage(request, user_id=id):
     else:
         details.alram_ring = False
         details.save()
-
+    flowers = flower.objects.all()
     
-    return render(request, 'mypage.html', {'details':details})
+    return render(request, 'mypage.html', {'details':details, 'flowers':flowers})
 
 
 def checkUsername(request):
@@ -418,3 +418,8 @@ def start_led(request):
         "success": '성공',
     }
     return JsonResponse(data)
+
+def flower_detail(request, flower_info):
+    flower_detail = flower.objects.get(name = flower_info)
+
+    return render(request, 'flower_detail.html',{'flower_detail':flower_detail})

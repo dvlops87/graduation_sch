@@ -11,6 +11,7 @@ class User(AbstractUser):
     led_color = models.CharField(max_length=40,default='')
     led_power = models.IntegerField(default=0)
     led_bright = models.IntegerField(default=5)
+    get_flower = models.ManyToManyField("flower", related_name="flower_list") 
     def __str__(self):
         return str(self.username)
 
@@ -22,7 +23,7 @@ class emotion(models.Model):
     day = models.IntegerField(default=0)
     file_name = models.TextField(default='')
     image = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
-    json_data = models.JSONField(default='{}')
+    json_data = models.JSONField(default=dict)
     def __str__(self):
         return str(str(self.month)+'/'+str(self.day))
 
@@ -33,6 +34,16 @@ class calender_emotion(models.Model):
     day = models.IntegerField(default=0)
     def __str__(self) -> str:
         return str(str(self.month)+'/'+str(self.day))
+
+class flower(models.Model):
+    name = models.CharField(default='', max_length=20)
+    mean = models.CharField(default='', max_length=40)
+    recommend = models.TextField(default='')
+    image = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
+    def __str__(self):
+        return self.name
+
+
 
 # 모델 만들어서 일기 작성할 때 마다 감정 스택 쌓게 하기 (중립은 제외) (최대 몇 스택??)
 # if len(emotion)%10 == 0

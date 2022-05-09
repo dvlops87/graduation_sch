@@ -16,6 +16,11 @@ input{
     height: 28px;
     border: 1px solid rgb(63, 63, 63);
 }
+form{
+    width: 60%;
+    height: 100%;
+    font-size: 50px;
+}
 #container {
     height: 2560px;
     width: 1400px;
@@ -28,6 +33,7 @@ input{
     height: 8%;
     width: 100%;
     margin: 0px;
+    font-size: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -35,7 +41,7 @@ input{
 }
 #login_box {
     width: 80%;
-    height: 80%;
+    height: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -46,11 +52,11 @@ input{
 
 #login_title {
     width: 100%;
-    height: 20%;
+    height: 10%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
+    font-size: 60px;
 }
 
 #login {
@@ -77,12 +83,14 @@ input{
     align-items: center;
     width:20%;
     height:40%;
-    font-size: 28px;
     border: 3px solid rgb(103, 103, 248);
     border-radius: 10px;
     padding-top: 10px;
+    font-size: 50px;
 }
-
+#alram_sound{
+    width: 70%;
+}
 #button:hover {cursor: pointer;}
 
 #password_check_button{

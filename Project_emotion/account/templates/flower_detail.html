@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/flower_detail.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <title>Home</title>
+    <title>Flower</title>
 </head>
 <body>
     <script>
@@ -86,30 +86,23 @@
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
     {% endif %}
     <div id="container">
-        <div id="mood_box">
-            <div id="setup">
-                <a href="{% url 'set_timer' user.id %}">알람 설정</a>
-            </div>
-            <div id="mood">
-                <a href="{% url 'set_led' user.id %}">조명 설정</a>
-            </div>
-        </div>
         <div id="flower_box">
-            <div id="time_box">
-                <h1 id="clock" style="color:black;">clock</h1>
+            <div id="flower_title">
+                <p>{{flower_detail.name}}</p>
             </div>
             <div id="flower">
-                <p>flower</p>
+                {% if flower_info.image %}
+                <img src="{{ flower_detail.image.url }}" id="flower_picture">
+                {% else %}
+                <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
+                {% endif %}
             </div>
-            
-        </div>
-        <div id="search_box">
-            <div id="mypage">
-                <a href="{% url 'mypage' user.id %}">꽃 도감</a>
+            <div id="detail">
+                <p>꽃말 : {{flower_detail.mean}}</p>
+                <hr>
+                <p>추천하는 감정 다스리기 : {{flower_detail.recommend}}</p>
             </div>
-            <div id="search">
-                <a href="{% url 'calender' user.id dt_now.month dt_now.day %}">감정 달력</a>
-            </div>
+            <a id="button" href="{% url 'mypage' user.id %}">되돌아가기</a>
         </div>
     </div>
 </body>

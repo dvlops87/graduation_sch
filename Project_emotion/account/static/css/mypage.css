@@ -52,35 +52,28 @@ input{
 }
 #login {
     width: 100%;
-    height: 100%;
+    height: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-}
-.flowers_tag {
-    width: 100%;
-    height: 100%;
-    margin: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
 }
 .flowers {
-    width: 50%;
-    height: 85%;
+    width: 45%;
+    height: 16%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    flex-wrap: wrap;
 }
 .flower_name {
     width: 10%;
 }
 .flower_picture {
-    width: 80%;
-    height: 80%;
-    background-color: rgb(99, 197, 197);
+    width: 60%;
+    height: 60%;
 }
 .emotion_picture {
     width: 100%;

@@ -10,6 +10,9 @@ a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
     font-family: 'OTWelcomeRA';
     margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 input{
     width: 200px;
@@ -17,8 +20,8 @@ input{
     border: 1px solid rgb(63, 63, 63);
 }
 #container {
-    height: 1280px;
-    width: 700px;
+    height: 2560px;
+    width: 1400px;
     margin: 0px;
     display: flex;
     justify-content: center;
@@ -26,8 +29,8 @@ input{
 }
 
 #login_box {
-    width: 70%;
-    height: 60%;
+    width: 60%;
+    height: 40%;
     display: flex;
     justify-content: center;
     align-items: center;

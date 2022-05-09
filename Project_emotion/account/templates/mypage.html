@@ -73,114 +73,22 @@
                 <p>그동안 모았던 꽃들</p>
             </div>
             <div id="login">
-                <div class="flowers_tag">
-                    <div class="flowers" id="angry_1">
+                {% for flower_info in flowers %}
+                    <div class="flowers" id="{{flower_info}}">
                         <div class="flower_picture">
-                            <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
+                            <a href="{% url 'flower_detail' flower_info.name %}">
+                                {% if flower_info.image %}
+                                <img src="{{ flower_info.image.url }}" class="emotion_picture">
+                                {% else %}
+                                <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
+                                {% endif %}
+                            </a>
                         </div>
                         <div class="flower_name">
-                            <p>꽃 이름</p>
+                            <p>{{flower_info.name}}</p>
                         </div>
                     </div>
-                    <div class="flowers" id="angry_2">
-                        <div class="flower_picture">
-                            <img src="" id="angry_2_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flowers_tag">
-                    <div class="flowers" id="angry_1">
-                        <div class="flower_picture">
-                            <img src="" class="emotion_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                    <div class="flowers" id="angry_2">
-                        <div class="flower_picture">
-                            <img src="" id="angry_2_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flowers_tag">
-                    <div class="flowers" id="angry_1">
-                        <div class="flower_picture">
-                            <img src="" class="emotion_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                    <div class="flowers" id="angry_2">
-                        <div class="flower_picture">
-                            <img src="" id="angry_2_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flowers_tag">
-                    <div class="flowers" id="angry_1">
-                        <div class="flower_picture">
-                            <img src="" class="emotion_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                    <div class="flowers" id="angry_2">
-                        <div class="flower_picture">
-                            <img src="" id="angry_2_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flowers_tag">
-                    <div class="flowers" id="angry_1">
-                        <div class="flower_picture">
-                            <img src="" class="emotion_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                    <div class="flowers" id="angry_2">
-                        <div class="flower_picture">
-                            <img src="" id="angry_2_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flowers_tag">
-                    <div class="flowers" id="angry_1">
-                        <div class="flower_picture">
-                            <img src="" class="emotion_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                    <div class="flowers" id="angry_2">
-                        <div class="flower_picture">
-                            <img src="" id="angry_2_picture">
-                        </div>
-                        <div class="flower_name">
-                            <p>꽃 이름</p>
-                        </div>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
