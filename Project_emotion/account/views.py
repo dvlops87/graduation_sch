@@ -184,7 +184,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     #     json_data = json.load(f)
     # print("감정 판단 결과: ")
     # print(json.dumps(json_data, indent="\t") )
-
+    import json
 
     #나중에 주소 다시 설정
     emotion_json_data = {}
