@@ -260,8 +260,8 @@ def write_diary(request, t_month, t_day, user_id=id):
         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
     
     for jsons in  details.json_data:
-        if max_value < int(jsons['howmany']):
-            max_value = int(jsons['howmany'])
+        if max_value < int(jsons[0]):
+            max_value = int(jsons[0])
     
     if details.diary_stack%20 == 10:
         sorted_dict = sorted(details.json_data.items(), key = lambda item: item[1], reverse = True)
