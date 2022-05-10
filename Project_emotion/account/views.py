@@ -208,19 +208,19 @@ def write_diary(request, t_month, t_day, user_id=id):
 
     final_emotion_value = 0
     if default_emotion == "angry":
-        final_emotion_value = 1
-    elif default_emotion == "disgust":
-        final_emotion_value = 2
-    elif default_emotion == "scared":
-        final_emotion_value = 3
-    elif default_emotion == "happy":
-        final_emotion_value = 4
-    elif default_emotion == "sad":
-        final_emotion_value = 5
-    elif default_emotion == "surprised":
-        final_emotion_value = 6
-    else:
         final_emotion_value = 0
+    elif default_emotion == "disgust":
+        final_emotion_value = 1
+    elif default_emotion == "scared":
+        final_emotion_value = 2
+    elif default_emotion == "happy":
+        final_emotion_value = 3
+    elif default_emotion == "sad":
+        final_emotion_value = 4
+    elif default_emotion == "surprised":
+        final_emotion_value = 5
+    else:
+        final_emotion_value = 6
 
 
     default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))

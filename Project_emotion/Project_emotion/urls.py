@@ -34,8 +34,8 @@ urlpatterns = [
     path('delete_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.delete_diary, name="delete_diary"),
     
     path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
-    path('view_wordcloud/', user.view_wordcloud, name="view_wordcloud"),
-    path('view_video/', user.view_video, name="view_video"),
+    path('view_wordcloud/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_wordcloud, name="view_wordcloud"),
+    path('view_video/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_video, name="view_video"),
 
     path('set_timer/<int:user_id>', user.set_timer, name="set_timer"),
     path('set_led/<int:user_id>/', user.set_led, name="set_led"),
