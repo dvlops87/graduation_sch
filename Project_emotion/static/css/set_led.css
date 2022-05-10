@@ -35,16 +35,18 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 60px;
 }
 #login_box {
     width: 80%;
     height: 60%;
     display: flex;
-    justify-content: center;
+    justify-content:first baseline;
     align-items: center;
     flex-direction: column;
-    border: 3px solid rgb(103, 103, 248);
+    border: 15px solid rgb(103, 103, 248);
     border-radius: 15px;
+    margin: 0px;
 }
 
 #login_title {
@@ -53,7 +55,7 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 50px;
+    font-size: 70px;
 }
 
 #login {
@@ -63,8 +65,7 @@ form{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-size: 35px;
-
+    font-size: 50px;
 }
 #button_box{
     display: flex;

@@ -10,24 +10,25 @@ from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 import json
+from random import *
 
 
 dt_now = datetime.datetime.now()
 
 # 최근 10개 일기 평가 -> 나무 설정
-def emotion_stack(u_id, count):
-    try:
-        emotions = emotion.objects.get(user_id = u_id).order_by(-id)
-        emotions = emotions[:count] # 최근 일기 count개 가져오기
-        sum_emotion = [0 for i in range(7)]
-        for emotion_one in emotions : # 최근 10개 일기 중 한 개
-            i=0
-            for emo in emotion_one.sum_emotion : # Model의 JSON필드, emo는 key 값
-                sum_emotion[i] = emotion.sum_emotion[emo]['howmany']
-                i += 1
-        print("최근 ",count,"개 일기 평가 : ",sum_emotion)
-    except:
-        print("아직 일기가 하나도 없습니다.")
+# def emotion_stack(u_id, count):
+#     try:
+#         emotions = emotion.objects.get(user_id = u_id).order_by(-id)
+#         emotions = emotions[:count] # 최근 일기 count개 가져오기
+#         sum_emotion = [0 for i in range(7)]
+#         for emotion_one in emotions : # 최근 10개 일기 중 한 개
+#             i=0
+#             for emo in emotion_one.sum_emotion : # Model의 JSON필드, emo는 key 값
+#                 sum_emotion[i] = emotion.sum_emotion[emo]['howmany']
+#                 i += 1
+#         print("최근 ",count,"개 일기 평가 : ",sum_emotion)
+#     except:
+#         print("아직 일기가 하나도 없습니다.")
 
 # Create your views here.
 def user_login(request):
@@ -69,8 +70,8 @@ def home(request):
     else:
         user.alram_ring = False
         user.save()
-    emotion_stack(user.id, 10)
-    return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
+    # emotion_stack(user.id, 10)
+    return render(request, 'home.html',{'dt_now':dt_now, 'user':user, 'flowers':user.user_emotion})
 
 def mypage(request, user_id=id):
     now = datetime.datetime.now()
@@ -84,9 +85,13 @@ def mypage(request, user_id=id):
     else:
         details.alram_ring = False
         details.save()
-    flowers = flower.objects.all()
+    flowers = details.get_flower.all()
+    print(flowers)
+    fff = flower.objects.all()
+    for f in flowers:
+        fff = fff.exclude(id = f.id)
     
-    return render(request, 'mypage.html', {'details':details, 'flowers':flowers})
+    return render(request, 'mypage.html', {'details':details, 'flowers':flowers, 'nothave':fff})
 
 
 def checkUsername(request):
@@ -188,7 +193,13 @@ def write_diary(request, t_month, t_day, user_id=id):
         default_emotion = 'angry'
         print("max : ",max_value, " default : ",default_emotion)
 
+    if details.diary_stack == 15:
+        details.diary_stack = 0
+    details.diary_stack = details.diary_stack +1
+
     for i in emotion_json_data:
+        details.json_data[i]['howmany'] += emotion_json_data[i]['howmany']
+        details.save()
         if max_value < emotion_json_data[i]['howmany']:
             max_value = int(emotion_json_data[i]['howmany'])
             default_emotion = i
@@ -246,7 +257,26 @@ def write_diary(request, t_month, t_day, user_id=id):
         c_e.save()
     except calender_emotion.DoesNotExist:
         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
-
+    
+    for json in  details.json_data:
+        if max_value < json[i]['howmany']:
+            max_value = json[i]['howmany']
+    
+    if details.diary_stack%20 == 10:
+        sorted_dict = sorted(details.json_data.items(), key = lambda item: item[1], reverse = True)
+        flower_name= next(iter(sorted_dict)) + '_' + str(randint(1,2))
+        flower_img= flower.objects.get(name=flower_name) 
+        details.user_emotion = flower_img.image_10
+        details.save()
+    elif details.diary_stack%20 == 1:
+        flower_img= flower.objects.get(id=1) 
+        details.user_emotion = flower_img.image_1
+        details.save()
+    elif details.diary_stack%20 == 5:
+        flower_img= flower.objects.get(id=1) 
+        details.user_emotion = flower_img.image_5
+        details.save()
+    
     return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
 
 
@@ -317,10 +347,17 @@ def view_diary(request, user_id,emotion_id, emotion_num):
         details.save()
 
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
+    return render(request, 'diary_detail.html',{'details':details, 'dt_now':dt_now, 'emotions':emotions})
+
+def view_video(user_id,emotion_id, emotion_num):
+    details = get_object_or_404(User, id=user_id)
+    emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
     subprocess.run('xdg-open /media/lhw/flower/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
-    t_month=dt_now.month
-    t_day=dt_now.day
-    return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
+
+def view_wordcloud(user_id,emotion_id, emotion_num):
+    details = get_object_or_404(User, id=user_id)
+    emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
+    subprocess.run('xdg-open /media/lhw/flower/work/picture/'+emotions.file_name+'/'+emotions.file_name+'.png', shell=True) # 동영상 보기
 
 def set_timer(request, user_id):
     details = get_object_or_404(User, id=user_id)
@@ -421,5 +458,4 @@ def start_led(request):
 
 def flower_detail(request, flower_info):
     flower_detail = flower.objects.get(name = flower_info)
-
     return render(request, 'flower_detail.html',{'flower_detail':flower_detail})

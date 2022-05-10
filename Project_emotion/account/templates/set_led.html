@@ -77,9 +77,9 @@
             <div id="led_color" style="display: none;">{{details.led_color}}</div>
             <div id="login">
                 <form action="{% url 'set_led' details.id %}" method="post">
-                    <label><div id="selected_color" style="width: 100%; height: 11%; padding: 7px 0px 0px 0px;">설정된 색상 : {{details.led_color}}</div></label>
                     {% csrf_token %}
-                    {{details.led_bright}}
+                    <!-- <label><div id="selected_color" style="width: 100%; height: 11%; padding: 7px 0px 0px 0px;">설정된 색상 : {{details.led_color}}</div></label> -->
+                    <!-- {{details.led_bright}} -->
                     <input type="radio" name="color" style="display: none;" value="{{details.led_color}}" checked/>
                     <input type="radio" name="power_radio" style="display: none;" id="power_radio" value="1" checked/>
                     <br>
@@ -92,11 +92,11 @@
                     <label for="color_3"><div class="color_div color_thr">세번째 색</div></label>
                     <input type="radio" name="color" id="color_3" value="FFFF00"style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <br>
-                    <label for="power"><div class="color_div">전원 {{details.led_power}}</div></label>
+                    <label for="power"><div class="color_div">전원&nbsp;&nbsp;&nbsp;{{details.led_power}}</div></label>
                     <input type="radio" name="power_radio" id="power" value="0" style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <input type="radio" name="power_radio" id="power2" value="1" style="display: none;" checked/>
                     <br>
-                    <div class="color_div">밝기
+                    <div class="color_div">밝기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input class="slidebar" type="range" name="led_bright" id="led_bright" value="{{details.led_bright}}" min="0" max="99"  onchange="$('#login_button').trigger('click');">
                     </div>
                     <br>

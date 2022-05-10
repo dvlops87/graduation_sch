@@ -89,6 +89,22 @@
                         </div>
                     </div>
                 {% endfor %}
+                {% for flower_info in nothave %}
+                    <div class="flowers" id="{{flower_info}}">
+                        <div class="flower_picture">
+                            <a href="{% url 'mypage' user.id %}">
+                                {% if flower_info.image %}
+                                <img src="{% static 'image/알림설정.png' %}" class="emotion_picture">
+                                {% else %}
+                                <img src="{% static 'image/알림설정.png' %}" class="emotion_picture">
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="flower_name">
+                            <p>{{flower_info.name}}</p>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
     </div>

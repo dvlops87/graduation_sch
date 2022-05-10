@@ -16,6 +16,9 @@ input{
     height: 28px;
     border: 1px solid rgb(63, 63, 63);
 }
+#back {
+    font-size: 70px;
+}
 #container {
     height: 2560px;
     width: 1400px;

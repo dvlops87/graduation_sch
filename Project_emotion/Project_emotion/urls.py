@@ -24,16 +24,23 @@ urlpatterns = [
     path('', user.user_login, name="login"),
     path('home/', user.home, name="home"),
     path('signup/', user.user_signup, name="signup"),
-    path('mypage/<int:user_id>', user.mypage, name="mypage"),
     path('user/api/checkUsername', user.checkUsername),
+
+    path('mypage/<int:user_id>', user.mypage, name="mypage"),
+    path('flower_detail/<str:flower_info>', user.flower_detail, name="flower_detail"),
+    
     path('calender/<int:user_id>/<int:t_month>/<int:t_day>',user.calender, name='calender'),
     path('write_diary/<int:t_month>/<int:t_day>/<int:user_id>', user.write_diary, name="write_diary"),
     path('delete_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.delete_diary, name="delete_diary"),
+    
     path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
+    path('view_wordcloud/', user.view_wordcloud, name="view_wordcloud"),
+    path('view_video/', user.view_video, name="view_video"),
+
     path('set_timer/<int:user_id>', user.set_timer, name="set_timer"),
     path('set_led/<int:user_id>/', user.set_led, name="set_led"),
     path('start_led/', user.start_led, name="start_led"),
-    path('flower_detail/<str:flower_info>', user.flower_detail, name="flower_detail"),
+
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

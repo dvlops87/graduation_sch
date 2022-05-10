@@ -5,34 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <title>Home</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+    <title>나의 일기</title>
 </head>
 <body>
     <script>
         $(function(){
-            var Target = document.getElementById("clock");
-            function clock() {
-                var time = new Date();
-    
-                var month = time.getMonth();
-                var date = time.getDate();
-                var day = time.getDay();
-                var week = ['일', '월', '화', '수', '목', '금', '토'];
-    
-                var hours = time.getHours();
-                var minutes = time.getMinutes();
-                var seconds = time.getSeconds();
-    
-                Target.innerText = 
-                `${month + 1}월 ${date}일 ${week[day]}요일 ` +
-                `${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-                    
-            }
-            clock();
-            setInterval(clock, 1000); // 1초마다 실행
-            
             var set_time = document.getElementById("alarm_time_none").innerHTML;
             var bool = document.getElementById("alarm_bool_none").innerHTML;
             console.log('set_time : ',set_time);
@@ -75,44 +55,26 @@
                 location.reload();
             }
         })
-            function backHome(){
-                window.location.href= "localhost:8000/home/";
-            }
     </script>
+    
     <div id="alarm_bool_none" style="display: none;">{{user.alram_ring}}</div>
     {% if user.alram_minute < 10 %}
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}0{{user.alram_minute}}</div>
     {% else %}
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
     {% endif %}
+
     <div id="container">
-        <div id="mood_box">
-            <div id="setup">
-                <a href="{% url 'set_timer' user.id %}"><img src="{% static 'image/알림설정.png' %}" style="width: 90%;"></a>
-            </div>
-            <div id="mood">
-                <a href="{% url 'set_led' user.id %}"><img src="{% static 'image/조명설정.jpg' %}" style="width: 90%;"></a>
-            </div>
+        <div id="back">
+            <a href="{% url 'calender' details.id dt_now.month dt_now.day %}">back</a>
         </div>
-        <div id="flower_box">
-            <div id="time_box">
-                <p id="clock"></p>
+        <div id="login_box">
+            <div id="login_title">
+                <p>{{emtions.month}}월 {{emtions.day}}일 일기</p>
             </div>
-            <div id="flower">
-                {% if flowers %}
-                <img src="{{ flowers.image.url }}" class="emotion_picture">
-                {% else %}
-                <p>분석된 감정 없음</p>
-                {% endif %}
-            </div>
-            
-        </div>
-        <div id="search_box">
-            <div id="mypage">
-                <a href="{% url 'mypage' user.id %}"><img src="{% static 'image/꽃도감.jpg' %}" style="width: 90%;"></a>
-            </div>
-            <div id="search">
-                <a href="{% url 'calender' user.id dt_now.month dt_now.day %}"><img src="{% static 'image/감정달력.jpg' %}" style="width: 90%;"></a>
+            <div id="login">
+                <a href="{% url 'view_video' details.id dt_now.month dt_now.day %}">동영상 일기 보기</a>
+                <a href="{% url 'view_wordcloud' details.id dt_now.month dt_now.day %}">워드 클라우드 보기</a>
             </div>
         </div>
     </div>

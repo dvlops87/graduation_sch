@@ -2,6 +2,31 @@ from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
+def default_dict():
+    emotion_dict = {
+	    "angry": {
+	    	"howmany": 0
+	    },
+	    "disgust": {
+	    	"howmany": 0
+	    },
+	    "scared": {
+	    	"howmany": 0
+	    },
+	    "happy": {
+	    	"howmany": 0
+	    },
+	    "sad": {
+	    	"howmany": 0
+	    },
+	    "surprised": {
+	    	"howmany": 0
+	    },
+	    "neutral": {
+	    	"howmany": 0
+	    }
+    }
+    return emotion_dict
 
 class User(AbstractUser):
     alram_hour = models.IntegerField(default=12)
@@ -11,7 +36,10 @@ class User(AbstractUser):
     led_color = models.CharField(max_length=40,default='')
     led_power = models.IntegerField(default=0)
     led_bright = models.IntegerField(default=5)
-    get_flower = models.ManyToManyField("flower", related_name="flower_list") 
+    get_flower = models.ManyToManyField("flower", related_name="flower_list")
+    json_data = models.JSONField(default=default_dict)
+    user_emotion = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
+    diary_stack = models.IntegerField(default=0)
     def __str__(self):
         return str(self.username)
 
@@ -39,7 +67,9 @@ class flower(models.Model):
     name = models.CharField(default='', max_length=20)
     mean = models.CharField(default='', max_length=40)
     recommend = models.TextField(default='')
-    image = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
+    image_1 = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
+    image_5 = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
+    image_10 = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
     def __str__(self):
         return self.name
 
