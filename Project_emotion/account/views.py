@@ -259,9 +259,9 @@ def write_diary(request, t_month, t_day, user_id=id):
     except calender_emotion.DoesNotExist:
         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
     
-    for json in  details.json_data:
-        if max_value < json[i]['howmany']:
-            max_value = json[i]['howmany']
+    for jsons in  details.json_data:
+        if max_value < int(jsons[i]['howmany']):
+            max_value = int(jsons[i]['howmany'])
     
     if details.diary_stack%20 == 10:
         sorted_dict = sorted(details.json_data.items(), key = lambda item: item[1], reverse = True)
