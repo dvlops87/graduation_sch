@@ -331,8 +331,27 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
         c_e.save()
     except calender_emotion.DoesNotExist:
         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
+    
+    if sum(sum_em) == 0:
+        t_emotion ="아직 없습니다."
+    else :
+        total_emotion = sum_em.index(max(sum_em))
+        if total_emotion == 0:
+            t_emotion ="화남"
+        elif total_emotion == 1:
+            t_emotion ="역겨움"
+        elif total_emotion == 2:
+            t_emotion ="두려움"
+        elif total_emotion == 3:
+            t_emotion ="행복함"
+        elif total_emotion == 4:
+            t_emotion ="슬픔"
+        elif total_emotion == 5:
+            t_emotion ="놀람"
+        elif total_emotion == 6:
+            t_emotion ="중립"
 
-    return render(request, 'test.html',{'details':details, 't_day':t_day,'t_month':t_month})
+    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
 def view_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
