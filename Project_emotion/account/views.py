@@ -350,15 +350,17 @@ def view_diary(request, user_id,emotion_id, emotion_num):
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
     return render(request, 'diary_detail.html',{'details':details, 'dt_now':dt_now, 'emotions':emotions})
 
-def view_video(user_id,emotion_id, emotion_num):
+def view_video(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
     subprocess.run('xdg-open /media/lhw/flower/work/plus/'+emotions.file_name+'/'+emotions.file_name+'.mp4', shell=True) # 동영상 보기
+    return render(request, 'diary_detail.html',{'details':details, 'dt_now':dt_now, 'emotions':emotions})
 
-def view_wordcloud(user_id,emotion_id, emotion_num):
+def view_wordcloud(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
     subprocess.run('xdg-open /media/lhw/flower/work/picture/'+emotions.file_name+'/'+emotions.file_name+'.png', shell=True) # 동영상 보기
+    return render(request, 'diary_detail.html',{'details':details, 'dt_now':dt_now, 'emotions':emotions})
 
 def set_timer(request, user_id):
     details = get_object_or_404(User, id=user_id)
