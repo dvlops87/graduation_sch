@@ -187,11 +187,12 @@ def write_diary(request, t_month, t_day, user_id=id):
 
 
     #나중에 주소 다시 설정
+    emotion_json_data = {}
     with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
         emotion_json_data = json.load(fr)
         max_value = int(emotion_json_data['angry']['howmany'])
         default_emotion = 'angry'
-        print("max : ",max_value, " default : ",default_emotion)
+        print("default max : ",max_value, " default : ",default_emotion)
 
     if details.diary_stack == 15:
         details.diary_stack = 0
