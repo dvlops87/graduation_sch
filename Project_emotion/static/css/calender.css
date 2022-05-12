@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'OTWelcomeRA';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2') format('woff2');
+    font-family: 'DungGeunMo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -8,7 +8,7 @@ a:link { color: black; text-decoration: none;}
 a:visited { color: black; text-decoration: none;}
 a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
-    font-family: 'OTWelcomeRA';
+    font-family: 'DungGeunMo';
     margin: 0px;
 }
 input{
@@ -20,6 +20,7 @@ input{
     font-size: 70px;
 }
 #container {
+    font-family: 'DungGeunMo';
     height: 2560px;
     width: 1400px;
     margin: 0px;
