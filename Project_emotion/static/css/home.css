@@ -36,15 +36,6 @@ a {
     align-items: center;
     flex-direction: column;
 }
-#back {
-    height: 8%;
-    width: 100%;
-    margin: 0px 0px 980px 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgb(202, 230, 255);
-}
 #setup {
     height: 15%;
     width: 100%;
@@ -69,7 +60,6 @@ a {
     justify-content:center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(226, 226, 226);
 }
 #time_box {
     height: 10%;
@@ -78,7 +68,6 @@ a {
     display: flex;
     justify-content:center;
     align-items: center;
-    background-color: rgb(255, 203, 251);
 }
 #clock {
     font-size: 70px;

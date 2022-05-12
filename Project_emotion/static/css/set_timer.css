@@ -19,7 +19,7 @@ input{
 form{
     width: 60%;
     height: 100%;
-    font-size: 50px;
+    font-size: 48px;
 }
 #container {
     font-family: 'DungGeunMo';
@@ -38,7 +38,6 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(202, 230, 255);
 }
 #login_box {
     width: 80%;
@@ -90,7 +89,7 @@ form{
     font-size: 50px;
 }
 #alram_sound{
-    width: 70%;
+    width: 60%;
 }
 #button:hover {cursor: pointer;}
 

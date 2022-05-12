@@ -18,6 +18,7 @@ input{
 }
 #back {
     font-size: 70px;
+    margin-top: 50px;
 }
 #container {
     font-family: 'DungGeunMo';
@@ -36,7 +37,7 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(255, 229, 229);
+    /* background-color: rgb(255, 229, 229); */
 }
 #emotion_box {
     height: 45%;
@@ -46,7 +47,7 @@ input{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(219, 219, 219);
+    /* background-color: rgb(219, 219, 219); */
 }
 #emotion {
     height: 100%;
@@ -56,7 +57,7 @@ input{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(219, 219, 219);
+    /* background-color: rgb(219, 219, 219); */
 }
 #choose {
     height: 100%;
@@ -66,7 +67,7 @@ input{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: rgb(221, 255, 223);
+    /* background-color: rgb(221, 255, 223); */
 }
 
 
