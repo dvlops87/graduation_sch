@@ -79,7 +79,6 @@ a {
     display: flex;
     justify-content:center;
     align-items: center;
-    background-color: rgb(199, 239, 255);
 }
 #search_box {
     height: 100%;
