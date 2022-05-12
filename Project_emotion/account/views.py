@@ -298,7 +298,7 @@ def write_diary(request, t_month, t_day, user_id=id):
         elif total_emotion == 6:
             t_emotion ="중립"
 
-    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
+    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':new_emotions,'t_day':t_day,'t_month':t_month})
     
 
 
