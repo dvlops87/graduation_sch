@@ -74,6 +74,13 @@
                 alert('알람이 울립니다.')
                 location.reload();
             }
+
+            
+            var img_urls = document.getElementById("img_url").innerText;
+            var container = document.getElementById("container");
+            console.log(img_urls)
+            container.style.backgroundImage = "url('"+img_urls+"')"
+            
         })
             function backHome(){
                 window.location.href= "localhost:8000/home/";
@@ -85,13 +92,20 @@
     {% else %}
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
     {% endif %}
+    
+    {% if flowers %}
+    <div id="img_url" style="display: none;">{{ flowers.image.url }}</div>
     <div id="container">
+    {% else %}
+    <div id="img_url" style="display: none;">{% static 'image/0level.png' %}</div>
+    <div id="container">
+    {% endif %}
         <div id="mood_box">
             <div id="setup">
-                <a href="{% url 'set_timer' user.id %}"><img src="{% static 'image/알림설정.png' %}" style="width: 90%;"></a>
+                <a href="{% url 'set_timer' user.id %}"><img src="{% static 'image/set_timer.png' %}" style="width: 90%;"></a>
             </div>
             <div id="mood">
-                <a href="{% url 'set_led' user.id %}"><img src="{% static 'image/조명설정.jpg' %}" style="width: 90%;"></a>
+                <a href="{% url 'set_led' user.id %}"><img src="{% static 'image/set_led.png' %}" style="width: 90%;"></a>
             </div>
         </div>
         <div id="flower_box">
@@ -99,20 +113,15 @@
                 <p id="clock"></p>
             </div>
             <div id="flower">
-                {% if flowers %}
-                <img src="{{ flowers.image.url }}" class="emotion_picture">
-                {% else %}
-                <p>분석된 감정 없음</p>
-                {% endif %}
             </div>
             
         </div>
         <div id="search_box">
             <div id="mypage">
-                <a href="{% url 'mypage' user.id %}"><img src="{% static 'image/꽃도감.jpg' %}" style="width: 90%;"></a>
+                <a href="{% url 'mypage' user.id %}"><img src="{% static 'image/flower.png' %}" style="width: 90%;"></a>
             </div>
             <div id="search">
-                <a href="{% url 'calender' user.id dt_now.month dt_now.day %}"><img src="{% static 'image/감정달력.jpg' %}" style="width: 90%;"></a>
+                <a href="{% url 'calender' user.id dt_now.month dt_now.day %}"><img src="{% static 'image/calender.png' %}" style="width: 90%;"></a>
             </div>
         </div>
     </div>
