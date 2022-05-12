@@ -93,10 +93,10 @@
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
     {% endif %}
     
-    {% if flowers and user.diary_stack%20 >= 10 %}
+    {% if flowers and user.diary_stack >= 10 %}
     <div id="img_url" style="display: none;">{{ flowers.image_10.url }}</div>
     <div id="container">
-    {% elif flowers and user.diary_stack%20 >= 5 %}
+    {% elif flowers and user.diary_stack >= 5 %}
     <div id="img_url" style="display: none;">{{ flowers.image_5.url }}</div>
     <div id="container">
     {% elif flowers %}
