@@ -196,7 +196,8 @@ def write_diary(request, t_month, t_day, user_id=id):
 
     if details.diary_stack == 15:
         details.diary_stack = 0
-    details.diary_stack = details.diary_stack +1
+    else:
+        details.diary_stack = details.diary_stack +1
 
     for i in emotion_json_data:
         details.json_data[i]['howmany'] += emotion_json_data[i]['howmany']
@@ -265,7 +266,7 @@ def write_diary(request, t_month, t_day, user_id=id):
     
     if details.diary_stack%20 == 10:
         sorted_dict = sorted(details.json_data.items(), key = lambda item: item[1], reverse = True)
-        flower_name= next(iter(sorted_dict)) + '_' + str(randint(1,2))
+        flower_name= next(iter(sorted_dict))
         flower_img= flower.objects.get(name=flower_name) 
         details.user_emotion = flower_img.image_10
         details.save()
