@@ -4,27 +4,13 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 def default_dict():
     emotion_dict = {
-	    "angry": {
-	    	"howmany": 0
-	    },
-	    "disgust": {
-	    	"howmany": 0
-	    },
-	    "scared": {
-	    	"howmany": 0
-	    },
-	    "happy": {
-	    	"howmany": 0
-	    },
-	    "sad": {
-	    	"howmany": 0
-	    },
-	    "surprised": {
-	    	"howmany": 0
-	    },
-	    "neutral": {
-	    	"howmany": 0
-	    }
+	    "angry": 0,
+	    "disgust": 0,
+	    "scared": 0,
+	    "happy": 0,
+	    "sad": 0,
+	    "surprised": 0,
+	    "neutral": 0
     }
     return emotion_dict
 

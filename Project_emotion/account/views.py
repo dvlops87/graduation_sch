@@ -200,7 +200,7 @@ def write_diary(request, t_month, t_day, user_id=id):
         details.diary_stack = details.diary_stack +1
 
     for i in emotion_json_data:
-        details.json_data[i]['howmany'] += emotion_json_data[i]['howmany']
+        details.json_data[i] += emotion_json_data[i]['howmany']
         details.save()
         if max_value < emotion_json_data[i]['howmany']:
             max_value = int(emotion_json_data[i]['howmany'])
@@ -261,12 +261,13 @@ def write_diary(request, t_month, t_day, user_id=id):
         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
     
     for jsons in  details.json_data:
-        if max_value < int(details.json_data[jsons]['howmany']):
-            max_value = int(details.json_data[jsons]['howmany'])
+        if max_value < int(details.json_data[jsons]):
+            max_value = int(details.json_data[jsons])
     
     if details.diary_stack%20 == 10:
-        sorted_dict = sorted(details.json_data.items(), key = lambda item: item[1], reverse = True)
-        flower_name= next(iter(sorted_dict))
+        sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
+        flower_name= next(iter(sorted_dict))+'_1'
+        print('flower_name: ',flower_name)
         flower_img= flower.objects.get(name=flower_name) 
         details.user_emotion = flower_img.image_10
         details.save()
@@ -372,7 +373,7 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
         elif total_emotion == 6:
             t_emotion ="중립"
 
-    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
+    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':new_emotions,'t_day':t_day,'t_month':t_month})
 
 def view_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
