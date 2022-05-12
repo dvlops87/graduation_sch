@@ -76,7 +76,7 @@
             }
 
             
-            var img_urls = document.getElementById("img_url").innerText;
+            var img_urls = document.getElementById("img_url").innerHTML;
             var container = document.getElementById("container");
             console.log(img_urls)
             container.style.backgroundImage = "url('"+img_urls+"')"
@@ -93,16 +93,11 @@
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
     {% endif %}
     
-    {% if flowers and user.diary_stack >= 10 %}
-    <div id="img_url" style="display: none;">{{ flowers.image_10.url }}</div>
-    <div id="container">
-    {% elif flowers and user.diary_stack >= 5 %}
-    <div id="img_url" style="display: none;">{{ flowers.image_5.url }}</div>
-    <div id="container">
-    {% elif flowers %}
-    <div id="img_url" style="display: none;">{% static 'image/0level.png' %}</div>
-    <div id="container">
+    {% if user.user_emotion %}
+    <div id="img_url" style="display: none;">{{ user.user_emotion.url }}</div>
     {% endif %}
+    {{user.diary_stack }}
+    <div id="container">
         <div id="mood_box">
             <div id="setup">
                 <a href="{% url 'set_timer' user.id %}"><img src="{% static 'image/set_timer.png' %}" style="width: 90%;"></a>

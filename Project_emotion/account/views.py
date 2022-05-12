@@ -71,7 +71,7 @@ def home(request):
         user.alram_ring = False
         user.save()
     # emotion_stack(user.id, 10)
-    return render(request, 'home.html',{'dt_now':dt_now, 'user':user, 'flowers':user.user_emotion})
+    return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
 
 def mypage(request, user_id=id):
     now = datetime.datetime.now()
