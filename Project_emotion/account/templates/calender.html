@@ -172,7 +172,7 @@
                 {% endif %}
             </div>
             <div id="choose">
-                <a href="{% url 'write_diary' t_month t_day details.id %}">일기 작성</a>
+                <a href="{% url 'write_step_one' details.id %}">일기 작성</a>
                 <br>
                 {% if emotions %}
                 {% for emotion in emotions %}

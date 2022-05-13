@@ -1,11 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/test.css' %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Write</title>
+    <title>분석 중</title>
 </head>
 <body>
     <script>
@@ -61,8 +63,10 @@
     {% else %}
     <div id="alarm_time_none" style="display: none;">{{user.alram_hour}}{{user.alram_minute}}</div>
     {% endif %}
-
-    <h1>달력 보기</h1>
-    <a href="{% url 'calender' details.id t_month t_day %}">감정 달력</a>
+    <div id="container">
+        <h1>잠시만 기다려주세요..</h1>
+        <h1>감정 분석 중 입니다..</h1>
+        <h1>완료 후, 자동으로 페이지가 이동됩니다..</h1>
+    </div>
 </body>
 </html>

@@ -1,19 +1,24 @@
 import numbers ,json, datetime, csv, subprocess
-from tkinter.tix import Tree
-from tracemalloc import get_object_traceback
+from datetime import datetime
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from .models import User, emotion, calender_emotion, flower
 from django.contrib import auth
-from django.contrib.auth.hashers import check_password
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
+from rest_framework import status
+from rest_framework.views import APIView
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.http import HttpResponseRedirect,HttpResponse
 from random import *
+import requests
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 
-dt_now = datetime.datetime.now()
+
+dt_now = datetime.now()
 
 # 최근 10개 일기 평가 -> 나무 설정
 # def emotion_stack(u_id, count):
@@ -31,19 +36,29 @@ dt_now = datetime.datetime.now()
 #         print("아직 일기가 하나도 없습니다.")
 
 # Create your views here.
+@csrf_exempt
 def user_login(request):
     if request.method == "POST":
         user_id = request.POST["user_id"]
         user_password = '1'
         user = authenticate(username = user_id, password = user_password)
+        users = User.objects.get(username = user_id)
         
         if user is not  None:
             login(request, user)
             print('로그인 성공')
-            return redirect('home')
+            response = HttpResponseRedirect('home/')
+            response.set_cookie('u_id',users.id)
+            response.set_cookie('user',users)
+            f = open(".\\user_id.txt",'w')
+            f.write(user_id)
+            f.close()
+            return response
         else:
             print('로그인 실패')
-            return render(request, 'login.html', {'error': '아이디와 비밀번호가 일치하지 않습니다.'})
+            response = HttpResponseRedirect('http://127.0.0.1:8000/')
+            return response
+            # return render(request, 'login.html', {'error': '아이디와 비밀번호가 일치하지 않습니다.'})
     else:
         return render(request, 'login.html')
 
@@ -58,7 +73,7 @@ def user_signup(request):
     return render(request, 'signup.html')
 
 def home(request):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     user = request.user
@@ -74,7 +89,7 @@ def home(request):
     return render(request, 'home.html',{'dt_now':dt_now, 'user':user})
 
 def mypage(request, user_id=id):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     details = get_object_or_404(User, id=user_id)
@@ -107,7 +122,7 @@ def checkUsername(request):
     return JsonResponse(result)
 
 def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     details = get_object_or_404(User, id=user_id)
@@ -161,12 +176,13 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
 
     return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
-def write_diary(request, t_month, t_day, user_id=id):
-    now = datetime.datetime.now()
+def write_step_one(request, user_id):
+    now = datetime.now()
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
-    subprocess.run('python /home/lhw/stt/main.py && python /home/lhw/stt/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
+    # subprocess.run('python /home/lhw/stt/main.py', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python C://Users//tjdgu//Desktop//jsooooon.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
     now_hour = now.hour
@@ -178,135 +194,268 @@ def write_diary(request, t_month, t_day, user_id=id):
     else:
         details.alram_ring = False
         details.save()
+    
+    response = HttpResponseRedirect('http://localhost:8000/write_step_one/await_page/')
+    response.set_cookie('file_name',file_name)
+    return response
+
+class write_step_two(APIView):
+    def post(self, request):
+        file_name = request.POST["file_name"]
+        user_id = request.POST["user_id"]
+        date_time_obj = datetime.strptime(file_name, '%Y-%m-%d_%H%M')
+        t_month = int(date_time_obj.strftime('%m'))
+        t_day = int(date_time_obj.strftime('%d'))
+        responses = HttpResponseRedirect('http://localhost:8000/calender/'+str(user_id)+'/'+str(t_month)+'/'+str(t_day))
+        emotion_json_data = {}
+        details = get_object_or_404(User, id=user_id)
+
+        # with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
+        with open('C://Users//tjdgu//Desktop//emotion.json', 'r') as fr:
+            emotion_json_data = json.load(fr)
+            max_value = int(emotion_json_data['angry']['howmany'])
+            default_emotion = 'angry'
+            print("default max : ",max_value, " default : ",default_emotion)
+        if details.diary_stack == 15:
+            details.diary_stack = 0
+        else:
+            details.diary_stack = details.diary_stack +1
+
+        for i in emotion_json_data:
+            details.json_data[i] += emotion_json_data[i]['howmany']
+            details.save()
+            if max_value < emotion_json_data[i]['howmany']:
+                max_value = int(emotion_json_data[i]['howmany'])
+                default_emotion = i
+        print("최종 감정 분류 : ",default_emotion," 값 :",max_value)
 
 
-    # with open('/home/lhw/stt/FaceEmotion_ID/emotion.json', 'r') as f:
-    #     json_data = json.load(f)
-    # print("감정 판단 결과: ")
-    # print(json.dumps(json_data, indent="\t") )
-    import json
-
-    #나중에 주소 다시 설정
-    emotion_json_data = {}
-    with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
-        emotion_json_data = json.load(fr)
-        max_value = int(emotion_json_data['angry']['howmany'])
-        default_emotion = 'angry'
-        print("default max : ",max_value, " default : ",default_emotion)
-
-    if details.diary_stack == 15:
-        details.diary_stack = 0
-    else:
-        details.diary_stack = details.diary_stack +1
-
-    for i in emotion_json_data:
-        details.json_data[i] += emotion_json_data[i]['howmany']
-        details.save()
-        if max_value < emotion_json_data[i]['howmany']:
-            max_value = int(emotion_json_data[i]['howmany'])
-            default_emotion = i
-    print("최종 감정 분류 : ",default_emotion," 값 :",max_value)
-
-    final_emotion_value = 0
-    if default_emotion == "angry":
         final_emotion_value = 0
-    elif default_emotion == "disgust":
-        final_emotion_value = 1
-    elif default_emotion == "scared":
-        final_emotion_value = 2
-    elif default_emotion == "happy":
-        final_emotion_value = 3
-    elif default_emotion == "sad":
-        final_emotion_value = 4
-    elif default_emotion == "surprised":
-        final_emotion_value = 5
-    else:
-        final_emotion_value = 6
+        if default_emotion == "angry":
+            final_emotion_value = 0
+        elif default_emotion == "disgust":
+            final_emotion_value = 1
+        elif default_emotion == "scared":
+            final_emotion_value = 2
+        elif default_emotion == "happy":
+            final_emotion_value = 3
+        elif default_emotion == "sad":
+            final_emotion_value = 4
+        elif default_emotion == "surprised":
+            final_emotion_value = 5
+        else:
+            final_emotion_value = 6
 
 
-    default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
-    if len(default_emotion) != 0:
-        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, number=default_emotion[len(default_emotion)-1].number+1,file_name=file_name, json_data=emotion_json_data)
-    else:
-        emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, file_name=file_name, json_data=emotion_json_data)
-    emotions.save()
-    new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
+        default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
+        if len(default_emotion) != 0:
+            emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, number=default_emotion[len(default_emotion)-1].number+1,file_name=file_name, json_data=emotion_json_data)
+        else:
+            emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, file_name=file_name, json_data=emotion_json_data)
+        emotions.save()
+        new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
+
+        sum_em = [0 for i in range(7)]
+        for em in new_emotions :
+            if em.emotion == 0:
+                sum_em[0] += 1
+            elif em.emotion == 1:
+                sum_em[1] += 1
+            elif em.emotion == 2:
+                sum_em[2] += 1
+            elif em.emotion == 3:
+                sum_em[3] += 1
+            elif em.emotion == 4:
+                sum_em[4] += 1
+            elif em.emotion == 5:
+                sum_em[5] += 1
+            elif em.emotion == 6:
+                sum_em[6] += 1
+
+        if sum(sum_em) == 0:
+            total_emotion = 0
+        else :
+            total_emotion = sum_em.index(max(sum_em))
+        try :
+            c_e = calender_emotion.objects.get(u_id=details, month=t_month, day=t_day)
+            c_e.daily_emotion = total_emotion
+            c_e.save()
+        except calender_emotion.DoesNotExist:
+            calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
+
+        for jsons in  details.json_data:
+            if max_value < int(details.json_data[jsons]):
+                max_value = int(details.json_data[jsons])
+
+        if details.diary_stack%20 == 10:
+            sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
+            flower_name= next(iter(sorted_dict))+'_1'
+            if 'neutral' in flower_name :
+                flower_name = 'disgust_1'
+                print('사용자 현재 감정은 중립입니다.')
+            flower_img= flower.objects.get(name=flower_name) 
+            details.user_emotion = flower_img.image_10
+            details.save()
+        elif details.diary_stack%20 == 1:
+            flower_img= flower.objects.get(id=1) 
+            details.user_emotion = flower_img.image_1
+            details.save()
+        elif details.diary_stack%20 == 5:
+            flower_img= flower.objects.get(id=1) 
+            details.user_emotion = flower_img.image_5
+            details.save()
+
+
+        return responses
+
+
+
+
+# def write_diary(request, t_month, t_day, user_id=id):
+#     now = datetime.now()
+#     nowDate = now.strftime('%Y-%m-%d')
+#     nowTime = now.strftime('%H%M')
+#     file_name = nowDate+'_'+nowTime
+#     subprocess.run('python /home/lhw/stt/main.py', shell=True) # 동영상 촬영 프로그램 실행
+#     # subprocess.run('python /home/lhw/stt/main.py && python /home/lhw/stt/FaceEmotion_ID/facial_emotion_image.py', shell=True) # 동영상 촬영 프로그램 실행
+#     details = get_object_or_404(User, id=user_id)
     
-    sum_em = [0 for i in range(7)]
-    for em in new_emotions :
-        if em.emotion == 0:
-            sum_em[0] += 1
-        elif em.emotion == 1:
-            sum_em[1] += 1
-        elif em.emotion == 2:
-            sum_em[2] += 1
-        elif em.emotion == 3:
-            sum_em[3] += 1
-        elif em.emotion == 4:
-            sum_em[4] += 1
-        elif em.emotion == 5:
-            sum_em[5] += 1
-        elif em.emotion == 6:
-            sum_em[6] += 1
+#     now_hour = now.hour
+#     now_minute = now.minute
+#     if details.alram_hour == now_hour and details.alram_minute == now_minute:
+#         details.alram_ring = True
+#         print('성공')
+#         details.save()
+#     else:
+#         details.alram_ring = False
+#         details.save()
+
+#     emotion_json_data = {}
+#     with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
+#         emotion_json_data = json.load(fr)
+#         max_value = int(emotion_json_data['angry']['howmany'])
+#         default_emotion = 'angry'
+#         print("default max : ",max_value, " default : ",default_emotion)
+
+#     # GET과 POST를 이용 (금요일 해야할 부분)
+#     # GET -> 사용자의 id, month, day 를 받아와서 로컬 파일로 저장, 같이 보낸 url로 대기 페이지(test.html) 이동
+#     # POST -> 사용자의 id, month, day를 이용해서 이 뒷 부분 실행, render로 calender.html로 이동
+
+#     if details.diary_stack == 15:
+#         details.diary_stack = 0
+#     else:
+#         details.diary_stack = details.diary_stack +1
+
+#     for i in emotion_json_data:
+#         details.json_data[i] += emotion_json_data[i]['howmany']
+#         details.save()
+#         if max_value < emotion_json_data[i]['howmany']:
+#             max_value = int(emotion_json_data[i]['howmany'])
+#             default_emotion = i
+#     print("최종 감정 분류 : ",default_emotion," 값 :",max_value)
+
+#     final_emotion_value = 0
+#     if default_emotion == "angry":
+#         final_emotion_value = 0
+#     elif default_emotion == "disgust":
+#         final_emotion_value = 1
+#     elif default_emotion == "scared":
+#         final_emotion_value = 2
+#     elif default_emotion == "happy":
+#         final_emotion_value = 3
+#     elif default_emotion == "sad":
+#         final_emotion_value = 4
+#     elif default_emotion == "surprised":
+#         final_emotion_value = 5
+#     else:
+#         final_emotion_value = 6
+
+
+#     default_emotion = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
+#     if len(default_emotion) != 0:
+#         emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, number=default_emotion[len(default_emotion)-1].number+1,file_name=file_name, json_data=emotion_json_data)
+#     else:
+#         emotions = emotion.objects.create(user_id=details, month=t_month, day=t_day, emotion=final_emotion_value, file_name=file_name, json_data=emotion_json_data)
+#     emotions.save()
+#     new_emotions = emotion.objects.filter(Q(user_id=details.id)& Q(month=t_month) & Q(day=t_day))
+    
+#     sum_em = [0 for i in range(7)]
+#     for em in new_emotions :
+#         if em.emotion == 0:
+#             sum_em[0] += 1
+#         elif em.emotion == 1:
+#             sum_em[1] += 1
+#         elif em.emotion == 2:
+#             sum_em[2] += 1
+#         elif em.emotion == 3:
+#             sum_em[3] += 1
+#         elif em.emotion == 4:
+#             sum_em[4] += 1
+#         elif em.emotion == 5:
+#             sum_em[5] += 1
+#         elif em.emotion == 6:
+#             sum_em[6] += 1
             
-    if sum(sum_em) == 0:
-        total_emotion = 0
-    else :
-        total_emotion = sum_em.index(max(sum_em))
-    try :
-        c_e = calender_emotion.objects.get(u_id=details, month=t_month, day=t_day)
-        c_e.daily_emotion = total_emotion
-        c_e.save()
-    except calender_emotion.DoesNotExist:
-        calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
+#     if sum(sum_em) == 0:
+#         total_emotion = 0
+#     else :
+#         total_emotion = sum_em.index(max(sum_em))
+#     try :
+#         c_e = calender_emotion.objects.get(u_id=details, month=t_month, day=t_day)
+#         c_e.daily_emotion = total_emotion
+#         c_e.save()
+#     except calender_emotion.DoesNotExist:
+#         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
     
-    for jsons in  details.json_data:
-        if max_value < int(details.json_data[jsons]):
-            max_value = int(details.json_data[jsons])
+#     for jsons in  details.json_data:
+#         if max_value < int(details.json_data[jsons]):
+#             max_value = int(details.json_data[jsons])
     
-    if details.diary_stack%20 == 10:
-        sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
-        flower_name= next(iter(sorted_dict))+'_1'
-        print('flower_name: ',flower_name)
-        flower_img= flower.objects.get(name=flower_name) 
-        details.user_emotion = flower_img.image_10
-        details.save()
-    elif details.diary_stack%20 == 1:
-        flower_img= flower.objects.get(id=1) 
-        details.user_emotion = flower_img.image_1
-        details.save()
-    elif details.diary_stack%20 == 5:
-        flower_img= flower.objects.get(id=1) 
-        details.user_emotion = flower_img.image_5
-        details.save()
+#     if details.diary_stack%20 == 10:
+#         sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
+#         flower_name= next(iter(sorted_dict))+'_1'
+#         print('flower_name: ',flower_name)
+#         if 'neutral' in flower_name :
+#             flower_name = 'disgust_1'
+#         flower_img= flower.objects.get(name=flower_name) 
+#         details.user_emotion = flower_img.image_10
+#         details.save()
+#     elif details.diary_stack%20 == 1:
+#         flower_img= flower.objects.get(id=1) 
+#         details.user_emotion = flower_img.image_1
+#         details.save()
+#     elif details.diary_stack%20 == 5:
+#         flower_img= flower.objects.get(id=1) 
+#         details.user_emotion = flower_img.image_5
+#         details.save()
         
-    if sum(sum_em) == 0:
-        t_emotion ="아직 없습니다."
-    else :
-        total_emotion = sum_em.index(max(sum_em))
-        if total_emotion == 0:
-            t_emotion ="화남"
-        elif total_emotion == 1:
-            t_emotion ="역겨움"
-        elif total_emotion == 2:
-            t_emotion ="두려움"
-        elif total_emotion == 3:
-            t_emotion ="행복함"
-        elif total_emotion == 4:
-            t_emotion ="슬픔"
-        elif total_emotion == 5:
-            t_emotion ="놀람"
-        elif total_emotion == 6:
-            t_emotion ="중립"
+#     if sum(sum_em) == 0:
+#         t_emotion ="아직 없습니다."
+#     else :
+#         total_emotion = sum_em.index(max(sum_em))
+#         if total_emotion == 0:
+#             t_emotion ="화남"
+#         elif total_emotion == 1:
+#             t_emotion ="역겨움"
+#         elif total_emotion == 2:
+#             t_emotion ="두려움"
+#         elif total_emotion == 3:
+#             t_emotion ="행복함"
+#         elif total_emotion == 4:
+#             t_emotion ="슬픔"
+#         elif total_emotion == 5:
+#             t_emotion ="놀람"
+#         elif total_emotion == 6:
+#             t_emotion ="중립"
 
-    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':new_emotions,'t_day':t_day,'t_month':t_month})
+#     return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':new_emotions,'t_day':t_day,'t_month':t_month})
     
 
 
 
 def delete_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
@@ -354,30 +503,12 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
     except calender_emotion.DoesNotExist:
         calender_emotion.objects.create(u_id=details, month=t_month, day=t_day,daily_emotion = total_emotion)
     
-    if sum(sum_em) == 0:
-        t_emotion ="아직 없습니다."
-    else :
-        total_emotion = sum_em.index(max(sum_em))
-        if total_emotion == 0:
-            t_emotion ="화남"
-        elif total_emotion == 1:
-            t_emotion ="역겨움"
-        elif total_emotion == 2:
-            t_emotion ="두려움"
-        elif total_emotion == 3:
-            t_emotion ="행복함"
-        elif total_emotion == 4:
-            t_emotion ="슬픔"
-        elif total_emotion == 5:
-            t_emotion ="놀람"
-        elif total_emotion == 6:
-            t_emotion ="중립"
 
-    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':new_emotions,'t_day':t_day,'t_month':t_month})
+    return redirect(calender,user_id,t_month, t_day)
 
 def view_diary(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
@@ -405,7 +536,7 @@ def view_wordcloud(request, user_id,emotion_id, emotion_num):
 
 def set_timer(request, user_id):
     details = get_object_or_404(User, id=user_id)
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
@@ -448,7 +579,7 @@ def set_timer(request, user_id):
 
 def set_led(request, user_id):
     details = get_object_or_404(User, id=user_id)
-    now = datetime.datetime.now()
+    now = datetime.now()
     now_hour = now.hour
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
@@ -503,3 +634,6 @@ def start_led(request):
 def flower_detail(request, flower_info):
     flower_detail = flower.objects.get(name = flower_info)
     return render(request, 'flower_detail.html',{'flower_detail':flower_detail})
+
+def await_page(request):
+    return render(request, 'test.html')

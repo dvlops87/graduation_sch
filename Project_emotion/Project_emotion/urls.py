@@ -18,6 +18,7 @@ from django.urls import path
 import account.views as user
 from django.conf import settings
 from django.conf.urls.static import static
+from account import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,10 +29,15 @@ urlpatterns = [
 
     path('mypage/<int:user_id>', user.mypage, name="mypage"),
     path('flower_detail/<str:flower_info>', user.flower_detail, name="flower_detail"),
+    path('write_step_one/await_page/', user.await_page, name="one_await_page"),
+    path('write_step_two/await_page/', user.await_page, name="two_await_page"),
     
     path('calender/<int:user_id>/<int:t_month>/<int:t_day>',user.calender, name='calender'),
-    path('write_diary/<int:t_month>/<int:t_day>/<int:user_id>', user.write_diary, name="write_diary"),
+    # path('write_diary/<int:t_month>/<int:t_day>/<int:user_id>', user.write_diary, name="write_diary"),
     path('delete_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.delete_diary, name="delete_diary"),
+    
+    path('write_step_one/<int:user_id>', user.write_step_one, name='write_step_one'),
+    path('write_step_two/', views.write_step_two.as_view()),
     
     path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
     path('view_wordcloud/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_wordcloud, name="view_wordcloud"),
