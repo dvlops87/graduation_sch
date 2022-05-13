@@ -50,7 +50,7 @@ def user_login(request):
             response = HttpResponseRedirect('home/')
             response.set_cookie('u_id',users.id)
             response.set_cookie('user',users)
-            f = open(".\\user_id.txt",'w')
+            f = open("/home/lhw/stt/FaceEmotion_ID/user_id.txt",'w')
             f.write(user_id)
             f.close()
             return response
@@ -181,8 +181,7 @@ def write_step_one(request, user_id):
     nowDate = now.strftime('%Y-%m-%d')
     nowTime = now.strftime('%H%M')
     file_name = nowDate+'_'+nowTime
-    # subprocess.run('python /home/lhw/stt/main.py', shell=True) # 동영상 촬영 프로그램 실행
-    subprocess.run('python C://Users//tjdgu//Desktop//jsooooon.py', shell=True) # 동영상 촬영 프로그램 실행
+    subprocess.run('python /home/lhw/stt/main.py', shell=True) # 동영상 촬영 프로그램 실행
     details = get_object_or_404(User, id=user_id)
     
     now_hour = now.hour
@@ -210,8 +209,7 @@ class write_step_two(APIView):
         emotion_json_data = {}
         details = get_object_or_404(User, id=user_id)
 
-        # with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
-        with open('C://Users//tjdgu//Desktop//emotion.json', 'r') as fr:
+        with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
             emotion_json_data = json.load(fr)
             max_value = int(emotion_json_data['angry']['howmany'])
             default_emotion = 'angry'
