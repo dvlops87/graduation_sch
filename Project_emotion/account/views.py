@@ -11,7 +11,7 @@ from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.http import HttpResponseRedirect,HttpResponse
-from random import *
+import random
 import requests
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -172,8 +172,18 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
             t_emotion ="놀람"
         elif total_emotion == 6:
             t_emotion ="중립"
+    emotions_least = emotions.order_by('-pk')[0:3]
+    least_emotion = ''
+    for i in emotions_least:
+        least_emotion = least_emotion + str(i.emotion)
+    print(least_emotion)
+    if '3' in least_emotion or '5' in least_emotion or '6' in least_emotion or least_emotion == '':
+        least_emotion = '행복'
+        return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
+    else:
+        least_emotion = '불행'
+        return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month, 'least_emotion':least_emotion})
 
-    return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
 def write_step_one(request, user_id):
     now = datetime.now()
@@ -496,3 +506,13 @@ def flower_detail(request, flower_info):
 
 def await_page(request):
     return render(request, 'test.html')
+
+def happy_emotion_play(request):
+    f = open("/home/lhw/stt/amount.txt",'r')
+    count = f.read()
+    f.close()
+    if count == 1:
+        range_int = '1'
+    else :
+        range_int = str(random.randint(1,count))
+    subprocess.run('xdg-open /media/lhw/flower/work/recollection/'+range_int+'.mp4', shell=True)

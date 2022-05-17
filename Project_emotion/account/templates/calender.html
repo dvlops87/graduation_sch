@@ -158,18 +158,23 @@
                 <tbody>
                 </tbody>
             </table>
+            
         </div>
         <div id="emotion_box">
             <div id="emotion">
                 <a href="{% url 'write_step_one' details.id %}" id="write_diary">일기 작성</a>
                 <p>{{t_month}}월 {{t_day}}일</p>
-                {% if t_emotion %}
-                <p id="emotion_value">오늘의 기분 : {{t_emotion}}</p>
-                {% else %}
+                {% if t_emotion == '아직 없습니다.' %}
                 <p id="emotion_value">일기를 작성해주세요!</p>
+                {% else %}
+                <p id="emotion_value">오늘의 기분 : {{t_emotion}}</p>
                 {% endif %}
                 {% if emotions.image %}
                 <img src="{{emotions.image.url}}" width="200"><br>
+                {% endif %}
+                
+                {% if least_emotion %}
+                <p class="least_emotion">혹시 요즘 {{least_emotion}}한 일을 겪고 계신가요? 그렇다면 <a href="{% url 'happy_emotion_play' %}" id="remind">추억</a>를 되돌아보는 시간을 가져보아요</p>
                 {% endif %}
             </div>
             <div id="choose">

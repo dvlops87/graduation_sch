@@ -33,7 +33,6 @@ urlpatterns = [
     path('write_step_two/await_page/', user.await_page, name="two_await_page"),
     
     path('calender/<int:user_id>/<int:t_month>/<int:t_day>',user.calender, name='calender'),
-    # path('write_diary/<int:t_month>/<int:t_day>/<int:user_id>', user.write_diary, name="write_diary"),
     path('delete_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.delete_diary, name="delete_diary"),
     
     path('write_step_one/<int:user_id>', user.write_step_one, name='write_step_one'),
@@ -42,6 +41,7 @@ urlpatterns = [
     path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
     path('view_wordcloud/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_wordcloud, name="view_wordcloud"),
     path('view_video/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_video, name="view_video"),
+    path('happy_emotion_play/', user.happy_emotion_play, name="happy_emotion_play"),
 
     path('set_timer/<int:user_id>', user.set_timer, name="set_timer"),
     path('set_led/<int:user_id>/', user.set_led, name="set_led"),

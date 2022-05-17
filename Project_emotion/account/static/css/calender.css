@@ -36,6 +36,7 @@ input{
     margin: 0px;
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     /* background-color: rgb(255, 229, 229); */
 }
@@ -117,4 +118,10 @@ input {
 }
 .selToday{
     background-color: #b9af52;
+}
+#remind {
+    color: rgb(152, 152, 235);
+}
+.least_emotion {
+    font-size: 50px;
 }
