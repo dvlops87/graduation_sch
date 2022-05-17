@@ -161,6 +161,7 @@
         </div>
         <div id="emotion_box">
             <div id="emotion">
+                <a href="{% url 'write_step_one' details.id %}" id="write_diary">일기 작성</a>
                 <p>{{t_month}}월 {{t_day}}일</p>
                 {% if t_emotion %}
                 <p id="emotion_value">오늘의 기분 : {{t_emotion}}</p>
@@ -170,7 +171,6 @@
                 {% if emotions.image %}
                 <img src="{{emotions.image.url}}" width="200"><br>
                 {% endif %}
-                <a href="{% url 'write_step_one' details.id %}">일기 작성</a>
             </div>
             <div id="choose">
                 {% if emotions %}
