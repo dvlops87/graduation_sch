@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/mypage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/diary_detail.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
     <title>나의 일기</title>
@@ -73,7 +73,8 @@
                 <p>{{emotions.month}}월 {{emotions.day}}일 일기</p>
             </div>
             <div id="login">
-                <a href="{% url 'view_video' details.id emotions.id emotions.number %}">동영상 일기 보기</a>
+                <a href="{% url 'view_video' details.id emotions.id emotions.number %}">동영상 보기</a>
+                <br>
                 <a href="{% url 'view_wordcloud' details.id emotions.id emotions.number %}">워드 클라우드 보기</a>
             </div>
         </div>

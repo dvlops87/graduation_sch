@@ -64,12 +64,22 @@ input{
     width: 50%;
     margin: 0px;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* background-color: rgb(221, 255, 223); */
+    overflow-y: scroll;
 }
-
+#watch_video {
+    color: rgb(152, 152, 235);
+}
+#delete_video {
+    color: #eb4166;
+}
+::-webkit-scrollbar { width: 50px; } /* 스크롤 바 */
+::-webkit-scrollbar-track { background-color:#fff; } /* 스크롤 바 밑의 배경 */
+::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; } /* 실질적 스크롤 바 */
+::-webkit-scrollbar-thumb:hover { background: #404040; } /* 실질적 스크롤 바 위에 마우스를 올려다 둘 때 */
+::-webkit-scrollbar-thumb:active { background: #808080; } /* 실질적 스크롤 바를 클릭할 때 */
+::-webkit-scrollbar-button { display: none; } /* 스크롤 바 상 하단 버튼 */
 
 table {
     clear: both;

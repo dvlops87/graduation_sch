@@ -50,9 +50,9 @@ def user_login(request):
             response = HttpResponseRedirect('home/')
             response.set_cookie('u_id',users.id)
             response.set_cookie('user',users)
-            f = open("/home/lhw/stt/FaceEmotion_ID/user_id.txt",'w')
-            f.write(user_id)
-            f.close()
+            # f = open("/home/lhw/stt/FaceEmotion_ID/user_id.txt",'w')
+            # f.write(user_id)
+            # f.close()
             return response
         else:
             print('로그인 실패')
@@ -208,8 +208,8 @@ class write_step_two(APIView):
         emotion_json_data = {}
         details = get_object_or_404(User, id=user_id)
 
-        with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
-        # with open('C:/Users/tjdgu/Desktop/emotion.json', 'r') as fr:
+        # with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
+        with open('C:/Users/tjdgu/Desktop/emotion.json', 'r') as fr:
             emotion_json_data = json.load(fr)
             max_value = int(emotion_json_data['angry']['howmany'])
             default_emotion = 'angry'
@@ -301,7 +301,27 @@ class write_step_two(APIView):
             flower_img= flower.objects.get(id=1) 
             details.user_emotion = flower_img.image_5
             details.save()
+# #   
+#         if sum(sum_em) == 0:
+#             t_emotion ="아직 없습니다."
+#         else :
+#             total_emotion = sum_em.index(max(sum_em))
+#             if total_emotion == 0:
+#                 t_emotion ="화남"
+#             elif total_emotion == 1:
+#                 t_emotion ="역겨움"
+#             elif total_emotion == 2:
+#                 t_emotion ="두려움"
+#             elif total_emotion == 3:
+#                 t_emotion ="행복함"
+#             elif total_emotion == 4:
+#                 t_emotion ="슬픔"
+#             elif total_emotion == 5:
+#                 t_emotion ="놀람"
+#             elif total_emotion == 6:
+#                 t_emotion ="중립"
 
+        # return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
 
         return redirect(calender,user_id,t_month, t_day)
 

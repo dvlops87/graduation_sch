@@ -170,16 +170,30 @@
                 {% if emotions.image %}
                 <img src="{{emotions.image.url}}" width="200"><br>
                 {% endif %}
+                <a href="{% url 'write_step_one' details.id %}">일기 작성</a>
             </div>
             <div id="choose">
-                <a href="{% url 'write_step_one' details.id %}">일기 작성</a>
-                <br>
                 {% if emotions %}
                 {% for emotion in emotions %}
-                <a href="{% url 'view_diary' details.id emotion.id emotion.number %}">{{emotion.number}} 번째 일기 보기</a>
-                <p>분석된 감정 : {{emotion.emotion}}</p>
-                <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}">{{emotion.number}} 번째 일기 삭제</a>
-                <br>
+                {% if emotion.emotion == 0 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 화남</p>
+                {% elif emotion.emotion == 1 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 역거움</p>
+                {% elif emotion.emotion == 2 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 두려움</p>
+                {% elif emotion.emotion == 3 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 행복함</p>
+                {% elif emotion.emotion == 4 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 슬픔</p>
+                {% elif emotion.emotion == 5 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 놀람</p>
+                {% elif emotion.emotion == 6 %}
+                <p>{{emotion.number}} 번째 일기 감정 : 중립</p>
+                {% endif %}
+                <p>
+                    <a href="{% url 'view_diary' details.id emotion.id emotion.number %}" id="watch_video">일기 보기 </a>/
+                    <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}" id="delete_video">일기 삭제</a>
+                </p>
                 {% endfor %}
                 {% endif %}
             </div>
