@@ -213,11 +213,16 @@ class write_step_two(APIView):
             emotion_json_data = json.load(fr)
             max_value = int(emotion_json_data['angry']['howmany'])
             default_emotion = 'angry'
-        if details.diary_stack == 15:
-            details.diary_stack = 0
-        else:
+        if details.diary_stack == 10:
+            details.diary_stack = 1
+        elif details.diary_stack == 8:
             details.diary_stack = details.diary_stack +1
-
+            for i in emotion_json_data:
+                details.json_data[i] = 0
+                details.save()
+        else :
+            details.diary_stack = details.diary_stack +1
+            
         for i in emotion_json_data:
             details.json_data[i] += emotion_json_data[i]['howmany']
             details.save()
@@ -284,7 +289,7 @@ class write_step_two(APIView):
             if max_value < int(details.json_data[jsons]):
                 max_value = int(details.json_data[jsons])
 
-        if details.diary_stack == 10:
+        if details.diary_stack == 7:
             sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
             flower_name= next(iter(sorted_dict))+'_1'
             if 'neutral' in flower_name :
@@ -292,12 +297,13 @@ class write_step_two(APIView):
                 print('사용자 현재 감정은 중립입니다.')
             flower_img= flower.objects.get(name=flower_name) 
             details.user_emotion = flower_img.image_10
+            details.get_flower.add(flower_img)
             details.save()
         elif details.diary_stack == 1:
             flower_img= flower.objects.get(id=1) 
             details.user_emotion = flower_img.image_1
             details.save()
-        elif details.diary_stack == 5:
+        elif details.diary_stack == 3:
             flower_img= flower.objects.get(id=1) 
             details.user_emotion = flower_img.image_5
             details.save()
