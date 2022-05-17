@@ -507,12 +507,14 @@ def flower_detail(request, flower_info):
 def await_page(request):
     return render(request, 'test.html')
 
-def happy_emotion_play(request):
+def happy_emotion_play(request,user_id,t_month, t_day):
     f = open("/home/lhw/stt/amount.txt",'r')
-    count = f.read()
+    count = int(f.read())
     f.close()
     if count == 1:
-        range_int = '1'
+        range_int = 1
     else :
-        range_int = str(random.randint(1,count))
-    subprocess.run('xdg-open /media/lhw/flower/work/recollection/'+range_int+'.mp4', shell=True)
+        range_int = random.randint(1,count)
+    subprocess.run('xdg-open /media/lhw/flower/work/recollection/'+str(range_int)+'.mp4', shell=True)
+    
+    return redirect(calender,user_id,t_month, t_day)

@@ -174,7 +174,7 @@
                 {% endif %}
                 
                 {% if least_emotion %}
-                <p class="least_emotion">혹시 요즘 {{least_emotion}}한 일을 겪고 계신가요? 그렇다면 <a href="{% url 'happy_emotion_play' %}" id="remind">추억</a>를 되돌아보는 시간을 가져보아요</p>
+                <p class="least_emotion">혹시 요즘 {{least_emotion}}한 일을 겪고 계신가요? 그렇다면 <a href="{% url 'happy_emotion_play' details.id t_month t_day %}" id="remind">추억</a>를 되돌아보는 시간을 가져보아요</p>
                 {% endif %}
             </div>
             <div id="choose">

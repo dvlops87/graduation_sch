@@ -41,7 +41,7 @@ urlpatterns = [
     path('view_diary/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_diary, name="view_diary"),
     path('view_wordcloud/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_wordcloud, name="view_wordcloud"),
     path('view_video/<int:user_id>/<int:emotion_id>/<int:emotion_num>', user.view_video, name="view_video"),
-    path('happy_emotion_play/', user.happy_emotion_play, name="happy_emotion_play"),
+    path('happy_emotion_play/<int:user_id>/<int:t_month>/<int:t_day>', user.happy_emotion_play, name="happy_emotion_play"),
 
     path('set_timer/<int:user_id>', user.set_timer, name="set_timer"),
     path('set_led/<int:user_id>/', user.set_led, name="set_led"),
