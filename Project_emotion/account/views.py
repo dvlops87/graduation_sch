@@ -58,7 +58,6 @@ def user_login(request):
             print('로그인 실패')
             response = HttpResponseRedirect('http://127.0.0.1:8000/')
             return response
-            # return render(request, 'login.html', {'error': '아이디와 비밀번호가 일치하지 않습니다.'})
     else:
         return render(request, 'login.html')
 
@@ -210,10 +209,10 @@ class write_step_two(APIView):
         details = get_object_or_404(User, id=user_id)
 
         with open('/home/lhw/leehw/combine_emotion/combinedemotion.json', 'r') as fr:
+        # with open('C:/Users/tjdgu/Desktop/emotion.json', 'r') as fr:
             emotion_json_data = json.load(fr)
             max_value = int(emotion_json_data['angry']['howmany'])
             default_emotion = 'angry'
-            print("default max : ",max_value, " default : ",default_emotion)
         if details.diary_stack == 15:
             details.diary_stack = 0
         else:
@@ -285,7 +284,7 @@ class write_step_two(APIView):
             if max_value < int(details.json_data[jsons]):
                 max_value = int(details.json_data[jsons])
 
-        if details.diary_stack%20 == 10:
+        if details.diary_stack == 10:
             sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
             flower_name= next(iter(sorted_dict))+'_1'
             if 'neutral' in flower_name :
@@ -294,17 +293,17 @@ class write_step_two(APIView):
             flower_img= flower.objects.get(name=flower_name) 
             details.user_emotion = flower_img.image_10
             details.save()
-        elif details.diary_stack%20 == 1:
+        elif details.diary_stack == 1:
             flower_img= flower.objects.get(id=1) 
             details.user_emotion = flower_img.image_1
             details.save()
-        elif details.diary_stack%20 == 5:
+        elif details.diary_stack == 5:
             flower_img= flower.objects.get(id=1) 
             details.user_emotion = flower_img.image_5
             details.save()
 
 
-        return responses
+        return redirect(calender,user_id,t_month, t_day)
 
 
 
