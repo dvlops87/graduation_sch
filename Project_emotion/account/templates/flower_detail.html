@@ -88,11 +88,11 @@
     <div id="container">
         <div id="flower_box">
             <div id="flower_title">
-                <p>{{flower_detail.name}}</p>
+                <p>{{flower_detail.flower_name}}</p>
             </div>
             <div id="flower">
-                {% if flower_info.image %}
-                <img src="{{ flower_detail.image.url }}" id="flower_picture">
+                {% if flower_detail.flower_img %}
+                <img src="{{ flower_detail.flower_img.url }}" id="flower_picture">
                 {% else %}
                 <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
                 {% endif %}
@@ -100,7 +100,7 @@
             <div id="detail">
                 <p>꽃말 : {{flower_detail.mean}}</p>
                 <hr>
-                <p>추천하는 감정 다스리기 : {{flower_detail.recommend}}</p>
+                <p style="line-height: 1.5;">{{flower_detail.recommend}}</p>
             </div>
             <a id="button" href="{% url 'mypage' user.id %}">되돌아가기</a>
         </div>

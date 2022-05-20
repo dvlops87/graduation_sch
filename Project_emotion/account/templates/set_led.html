@@ -68,7 +68,7 @@
 
     <div id="container">
         <div id="back">
-            <a href="http://127.0.0.1:8000/home/">back</a>
+            <a href="http://127.0.0.1:8000/home/" style="font-size: 50px; color:white;">back</a>
         </div>
         <div id="login_box">
             <div id="login_title">
@@ -92,11 +92,11 @@
                     <label for="color_3"><div class="color_div color_thr">세번째 색</div></label>
                     <input type="radio" name="color" id="color_3" value="FFFF00"style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <br>
-                    <label for="power"><div class="color_div">전원&nbsp;&nbsp;&nbsp;{{details.led_power}}</div></label>
+                    <label for="power"><div class="color_div color_white">전원&nbsp;&nbsp;&nbsp;{{details.led_power}}</div></label>
                     <input type="radio" name="power_radio" id="power" value="0" style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <input type="radio" name="power_radio" id="power2" value="1" style="display: none;" checked/>
                     <br>
-                    <div class="color_div">밝기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="color_div color_white">밝기 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <input class="slidebar" type="range" name="led_bright" id="led_bright" value="{{details.led_bright}}" min="0" max="99"  onchange="$('#login_button').trigger('click');">
                     </div>
                     <br>

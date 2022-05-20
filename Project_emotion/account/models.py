@@ -51,11 +51,14 @@ class calender_emotion(models.Model):
 
 class flower(models.Model):
     name = models.CharField(default='', max_length=20)
+    flower_name = models.CharField(default='', max_length=20)
     mean = models.CharField(default='', max_length=40)
     recommend = models.TextField(default='')
     image_1 = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
     image_5 = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
     image_10 = models.ImageField(upload_to = 'flowers/',blank=True, null=True)
+    thumbnail = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
+    flower_img = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
     def __str__(self):
         return self.name
 

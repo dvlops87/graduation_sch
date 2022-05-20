@@ -10,21 +10,34 @@ a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
     font-family: 'DungGeunMo';
     margin: 0px;
+    background-color: #e2fee9;
 }
 input{
     width: 200px;
     height: 28px;
     border: 1px solid rgb(63, 63, 63);
 }
+input[type='range'] {
+    border: 1px solid #b085ff;
+    width: 400px;
+    background-color: #ece2fc;
+    margin-top: -35px;
+    accent-color: #b085ff;
+}
+select {
+    font-family: 'DungGeunMo';
+    border-color: #b085ff;
+    background-color: #ece2fc;
+}
 form{
-    width: 60%;
+    width: 80%;
     height: 100%;
-    font-size: 48px;
+    font-size: 30px;
 }
 #container {
     font-family: 'DungGeunMo';
-    height: 2560px;
-    width: 1400px;
+    height: 1280px;
+    width: 720px;
     margin: 0px;
     display: flex;
     align-items: center;
@@ -46,7 +59,7 @@ form{
     justify-content:first baseline;
     align-items: center;
     flex-direction: column;
-    border: 10px solid rgb(103, 103, 248);
+    border: 10px solid #b085ff;
     border-radius: 20px;
 }
 
@@ -56,7 +69,7 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 60px;
+    font-size: 70px;
 }
 
 #login {
@@ -66,7 +79,7 @@ form{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-size: 28px;
+    font-size: 70px;
 
 }
 #button_box{
@@ -81,12 +94,13 @@ form{
     display: flex;
     justify-content: center;
     align-items: center;
-    width:20%;
-    height:40%;
-    border: 8px solid rgb(103, 103, 248);
+    width:40%;
+    height:60%;
+    border: 8px solid #b085ff;
     border-radius: 20px;
     padding-top: 10px;
     font-size: 50px;
+    background-color: #f2ecfc;
 }
 #alram_sound{
     width: 60%;

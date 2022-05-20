@@ -18,8 +18,8 @@ input{
 }
 #container {
     font-family: 'DungGeunMo';
-    height: 2560px;
-    width: 1400px;
+    height: 1280px;
+    width: 720px;
     margin: 0px;
     display: flex;
     align-items: center;

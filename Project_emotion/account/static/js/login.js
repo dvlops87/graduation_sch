@@ -63,7 +63,7 @@ var $padActive = false; // is active keypad visible :: global
 
                 switch (e) {
                     case 'x':
-                        strItem += '<a href="javascript:;" class="back"><span>x</span></a>'
+                        strItem += '<a href="javascript:;" class="back"><span>BACK</span></a>'
                         break;
                     case 'ok':
                         strItem += '<a href="javascript:;" class="ok">OK</a>'

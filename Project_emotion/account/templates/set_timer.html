@@ -58,28 +58,28 @@
     <div id="alarm_bool_none" style="display: none;">{{user.alram_ring}}</div>
     <div id="container">
         <div id="back">
-            <a href="http://127.0.0.1:8000/home/">back</a>
+            <a href="http://127.0.0.1:8000/home/" style="font-size: 40px;">back</a>
         </div>
         <div id="login_box">
             <div id="login_title">
-                <p style="font-size: 70px;">알람 설정</p>
+                <p>알람 설정</p>
             </div>
             <div id="login">
                 <form action="{% url 'set_timer' details.id %}" method="POST">
                     {% csrf_token %}
                     {% if details.alram_minute < 10 %}
-                    <label style="display: flex; align-items: center; justify-content: center;">설정된 알람 시간 : {{details.alram_hour}}시 0{{details.alram_minute}}분</label>
+                    <label style="display: flex; align-items: center; justify-content: center; font-size: 40px;">알람 시간 : {{details.alram_hour}}시 0{{details.alram_minute}}분</label>
                     <div id="alarm_time_none" style="display: none;">{{details.alram_hour}}0{{details.alram_minute}}</div>
                     {% else %}
-                    <label>설정된 알람 시간 : {{details.alram_hour}}시 {{details.alram_minute}}분</label>
+                    <label style="display: flex; align-items: center; justify-content: center; font-size: 40px;">알람 시간 : {{details.alram_hour}}시 {{details.alram_minute}}분</label>
                     <div id="alarm_time_none" style="display: none;">{{details.alram_hour}}{{details.alram_minute}}</div>
                     {% endif %}
                     <br>
-                    <select name = "AMPM" id="AMPM" style="width:29%; height:15%;font-size: 40px;">
+                    <select name = "AMPM" id="AMPM" style="width:28%; height:15%;font-size: 30px;">
                         <option value = "PM" selected>오후</option>
                         <option value = "AM">오전</option>
                      </select>
-                    <select name = "hour" id="hours" style="width:29%; height:15%;font-size: 40px;">
+                    <select name = "hour" id="hours" style="width:28%; height:15%;font-size: 30px;">
                         <option value = "01">01</option>
                         <option value = "02">02</option>
                         <option value = "03">03</option>
@@ -93,7 +93,7 @@
                         <option value = "11">11</option>
                         <option value = "12" selected>12</option>
                      </select>
-                     <select name = "minute" id="minutes" style="width:29%; height:15%;font-size: 40px;">
+                     <select name = "minute" id="minutes" style="width:28%; height:15%;font-size: 30px;">
                          <option value = "00" selected>00</option>
                          <option value = "05">05</option>
                          <option value = "10">10</option>
@@ -110,7 +110,7 @@
                     <br>
                     <input type="submit" id="login_button" style="display: none;">
                     <br>
-                    <div class="color_div">볼륨 {{details.alram_sound}}&nbsp;&nbsp;
+                    <div class="color_div" style="font-size: 33px;">볼륨 {{details.alram_sound}}&nbsp;&nbsp;
                     <input class="slidebar" type="range" name="alram_sound" id="alram_sound" value="{{details.alram_sound}}" min="0" max="99"  onchange="$('#login_button').trigger('click');">
                     </div>
                 </form>

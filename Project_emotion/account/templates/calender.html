@@ -20,7 +20,6 @@
             var t_day = document.getElementById('t_day').className;
             var t_month = document.getElementById('t_month').className;
             
-            
             $("input[name=preMon]").click(function() { // 이전달
                 $("#calendar > tbody > td").remove();
                 $("#calendar > tbody > tr").remove();
@@ -117,9 +116,12 @@
                 alert('알람이 울립니다.')
                 location.reload();
             }
+            var docV = document.documentElement;
+
+		// 전체화면 설정
+
         })
-        
-    </script>
+</script>
 
 <div type="hidden" id="myId" class="{{details.id}}"></div>
 <div type="hidden" id="myEmotion" class="{{emotions.emotion}}"></div>
@@ -135,7 +137,7 @@
 
     <div id="container">
         <div id="back">
-            <a href="http://127.0.0.1:8000/home/">back</a>
+            <a href="http://127.0.0.1:8000/home/" style="font-size: 40px;">back</a>
         </div>
         <div id="calender_box">
             <table id="calendar">
@@ -174,26 +176,26 @@
                 {% endif %}
                 
                 {% if least_emotion %}
-                <p class="least_emotion">혹시 요즘 {{least_emotion}}한 일을 겪고 계신가요? 그렇다면 <a href="{% url 'happy_emotion_play' details.id t_month t_day %}" id="remind">추억</a>를 되돌아보는 시간을 가져보아요</p>
+                <p class="least_emotion">혹시 요즘<br>{{least_emotion}}한 일을<br>겪고 계신가요? <br>그렇다면 <a href="{% url 'happy_emotion_play' details.id t_month t_day %}" id="remind">추억</a>을 <br>되돌아보는 시간을<br>가져보아요</p>
                 {% endif %}
             </div>
             <div id="choose">
                 {% if emotions %}
                 {% for emotion in emotions %}
                 {% if emotion.emotion == 0 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 화남</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 화남</p>
                 {% elif emotion.emotion == 1 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 역거움</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 역겨움</p>
                 {% elif emotion.emotion == 2 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 두려움</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 두려움</p>
                 {% elif emotion.emotion == 3 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 행복함</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 행복함</p>
                 {% elif emotion.emotion == 4 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 슬픔</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 슬픔</p>
                 {% elif emotion.emotion == 5 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 놀람</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 놀람</p>
                 {% elif emotion.emotion == 6 %}
-                <p>{{emotion.number}} 번째 일기 감정 : 중립</p>
+                    <p>{{emotion.number}} 번째 일기 감정 : 중립</p>
                 {% endif %}
                 <p>
                     <a href="{% url 'view_diary' details.id emotion.id emotion.number %}" id="watch_video">일기 보기 </a>/

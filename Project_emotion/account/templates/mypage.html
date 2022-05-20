@@ -66,7 +66,7 @@
 
     <div id="container">
         <div id="back">
-            <a href="http://127.0.0.1:8000/home/">back</a>
+            <a href="http://127.0.0.1:8000/home/" style="font-size: 30px;">back</a>
         </div>
         <div id="login_box">
             <div id="login_title">
@@ -77,15 +77,15 @@
                     <div class="flowers" id="{{flower_info}}">
                         <div class="flower_picture">
                             <a href="{% url 'flower_detail' flower_info.name %}">
-                                {% if flower_info.image_10 %}
-                                <img src="{{ flower_info.image_10.url }}" class="emotion_picture">
+                                {% if flower_info.thumbnail %}
+                                <img src="{{ flower_info.thumbnail.url }}" class="emotion_picture">
                                 {% else %}
-                                <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
+                                <img src="{{ flower_info.image_10.url }}" class="emotion_picture">
                                 {% endif %}
                             </a>
                         </div>
                         <div class="flower_name">
-                            <p>{{flower_info.name}}</p>
+                            <p>{{flower_info.flower_name}}</p>
                         </div>
                     </div>
                 {% endfor %}
@@ -93,15 +93,11 @@
                     <div class="flowers" id="{{flower_info}}">
                         <div class="flower_picture">
                             <a href="{% url 'mypage' user.id %}">
-                                {% if flower_info.image %}
-                                <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
-                                {% else %}
-                                <img src="{% static 'image/a.jpg' %}" class="emotion_picture">
-                                {% endif %}
+                                <img src="{% static 'image/un.png' %}" class="emotion_picture">
                             </a>
                         </div>
                         <div class="flower_name">
-                            <p>{{flower_info.name}}</p>
+                            <p>Unknown</p>
                         </div>
                     </div>
                 {% endfor %}

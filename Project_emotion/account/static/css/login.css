@@ -21,8 +21,8 @@ input{
 }
 #container {
     font-family: 'DungGeunMo';
-    height: 2560px;
-    width: 1400px;
+    height: 1280px;
+    width: 720px;
     margin: 0px;
     display: flex;
     justify-content: center;
@@ -30,8 +30,8 @@ input{
 }
 
 #login_box {
-    width: 60%;
-    height: 40%;
+    width: 70%;
+    height: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -67,24 +67,24 @@ form {
 }
 #id {
     width: 50%;
-    height: 20%;
-    font-size: 40px;
+    height: 30%;
+    font-size: 70px;
+    margin-left: 20px;
 }
 #button_box{
     display: flex;
     justify-content: center;
     align-items: center;
-    width:100%;
-    height:20%;
-    font-size: 23px;
-
+    width:150%;
+    height:40%;
+    font-size:45px;
 }
 #button {
     padding-top: 7px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width:20%;
+    width:40%;
     height:40%;
     font-size: 28px;
     border: 8px solid rgb(103, 103, 248);
@@ -97,9 +97,9 @@ form {
     position:absolute;
     top:0;
     left:0;
-    padding: 20px;
+    padding: 10px;
     width:100%;
-    max-width: 450px;
+    max-width: 400px;
     background-color:#eceef1;
     z-index:100;
     border-radius:20px;
@@ -128,7 +128,7 @@ form {
 .keypad .item:last-child { margin-bottom:0; }
 .keypad .item a {
     width: 30%;
-    height: 100px;
+    height: 150px;
     border:5px solid #fff;
     border-radius:50%;
     box-shadow: 0 1px 5px rgba(0,0,0,.2);
@@ -139,9 +139,10 @@ form {
     color:#172638;
 }
 .keypad .item a.n {font-size: 3.0rem;}
-.keypad .item a.ok {font-size: 1.6rem;}
-.keypad .item a.back span {position:relative;color:#fff;background-color:#172638;padding: 0 10px 0 5px;text-align:center;line-height: 24px;}
-.keypad .item a.back span::before {content: "";position: absolute;left: -12px;bottom: 0;width: 0;height: 0;border-right: 12px solid #172638;border-top: 12px solid transparent;border-bottom: 12px solid transparent;}
+.keypad .item a.ok {font-size: 1.8rem;}
+.keypad .item a.back {font-size: 1.8rem;}
+/* .keypad .item a.back span {position:relative;color:#fff;background-color:#172638;padding: 0 10px 0 5px;text-align:center;line-height: 24px;width: 50px;height: 50px;}
+.keypad .item a.back span::before {content: "";position: absolute;left: -12px;bottom: 0;width: 50px;height: 50px;border-right: 12px solid #172638;border-top: 12px solid transparent;border-bottom: 12px solid transparent;} */
 
 .keypad .item a.hover { background-color:#c7daf4; }
 .keypad .item a:active { background-color:#829fc4; color:#fff; }

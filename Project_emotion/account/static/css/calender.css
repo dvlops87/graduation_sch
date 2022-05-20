@@ -10,6 +10,9 @@ a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
     font-family: 'DungGeunMo';
     margin: 0px;
+    height: 1280px;
+    width: 720px;
+    background-color: #fbe9e9;
 }
 input{
     width: 200px;
@@ -22,8 +25,8 @@ input{
 }
 #container {
     font-family: 'DungGeunMo';
-    height: 2560px;
-    width: 1400px;
+    height: 1280px;
+    width: 720px;
     margin: 0px;
     flex-direction: column;
     display: flex;
@@ -38,17 +41,14 @@ input{
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    /* background-color: rgb(255, 229, 229); */
 }
 #emotion_box {
     height: 45%;
     width: 100%;
     margin: 0px;
-    font-size: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: rgb(219, 219, 219); */
 }
 #emotion {
     height: 100%;
@@ -58,16 +58,17 @@ input{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* background-color: rgb(219, 219, 219); */
+    font-size: 30px;
 }
 #choose {
-    height: 100%;
+    height: 80%;
     width: 50%;
     margin: 0px;
     display: flex;
     align-items: center;
     flex-direction: column;
     overflow-y: scroll;
+    font-size: 20px;
 }
 #watch_video {
     color: rgb(152, 152, 235);
@@ -76,52 +77,51 @@ input{
     color: #eb4166;
 }
 #write_diary {
-    font-size: 70px;
+    font-size: 50px;
     color: rgb(48, 48, 48);
 }
-::-webkit-scrollbar { width: 50px; } /* 스크롤 바 */
-::-webkit-scrollbar-track { background-color:#fff; } /* 스크롤 바 밑의 배경 */
-::-webkit-scrollbar-thumb { background: #ddd; border-radius: 10px; } /* 실질적 스크롤 바 */
-::-webkit-scrollbar-thumb:hover { background: #404040; } /* 실질적 스크롤 바 위에 마우스를 올려다 둘 때 */
-::-webkit-scrollbar-thumb:active { background: #808080; } /* 실질적 스크롤 바를 클릭할 때 */
+::-webkit-scrollbar { width: 30px; } /* 스크롤 바 */
+::-webkit-scrollbar-track { background-color:#fbe9e9; } /* 스크롤 바 밑의 배경 */
+::-webkit-scrollbar-thumb { background: #e2c1c1; border-radius: 10px; } /* 실질적 스크롤 바 */
 ::-webkit-scrollbar-button { display: none; } /* 스크롤 바 상 하단 버튼 */
 
 table {
     clear: both;
-    width: 70%;
-    height: 70%;
-    font-size: 45px;
+    width: 90%;
+    height: 90%;
 }
 th {
-    height: 100px;
-    width: 70px;
-    background-color:  orange;
+    height: 40px;
+    width: 40px;
+    background-color:  #f2b0b0;
+    font-size: 30px;
 }
 td {
     text-align: center;
-    height: 150px;
-    width: 70px;
-    background-color: #FFFDC5;
+    height: 80px;
+    width: 40px;
+    background-color: #ffffff;
+    font-size: 30px;
 }
 input {
-    height: 50px;
-    width: 70px;
+    height: 40px;
+    width: 40px;
     border: none;
-    background-color:  orange;
-    font-size: 45px;
+    background-color:  #f2b0b0;
+    font-size: 30px;
 }
 .year_mon{
-    font-size: 45px;
+    font-size: 30px;
 }
 .colToday{
-    background-color: #FFA07A;
+    background-color: #dab0f2;
 }
 .selToday{
-    background-color: #b9af52;
+    background-color: #f2b0b0;
 }
 #remind {
     color: rgb(152, 152, 235);
 }
 .least_emotion {
-    font-size: 50px;
+    font-size: 30px;
 }

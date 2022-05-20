@@ -50,9 +50,9 @@ def user_login(request):
             response = HttpResponseRedirect('home/')
             response.set_cookie('u_id',users.id)
             response.set_cookie('user',users)
-            f = open("/home/lhw/stt/FaceEmotion_ID/user_id.txt",'w')
-            f.write(user_id)
-            f.close()
+            # f = open("/home/lhw/stt/FaceEmotion_ID/user_id.txt",'w')
+            # f.write(user_id)
+            # f.close()
             return response
         else:
             print('로그인 실패')
@@ -172,16 +172,19 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
             t_emotion ="놀람"
         elif total_emotion == 6:
             t_emotion ="중립"
-    emotions_least = emotions.order_by('-pk')[0:3]
+    emotions_order = emotion.objects.filter(Q(user_id=details.id)& Q(month=dt_now.month) & Q(day=dt_now.day))
+    emotions_least = emotions_order.order_by('-pk')[0:3]
     least_emotion = ''
     for i in emotions_least:
         least_emotion = least_emotion + str(i.emotion)
     print(least_emotion)
     if '3' in least_emotion or '5' in least_emotion or '6' in least_emotion or least_emotion == '':
         least_emotion = '행복'
+        print('행복')
         return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
     else:
         least_emotion = '불행'
+        print('불행')
         return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month, 'least_emotion':least_emotion})
 
 
