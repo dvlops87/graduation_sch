@@ -79,7 +79,6 @@ def home(request):
     user = get_object_or_404(User, id=user.id)
     if user.alram_hour == now_hour and user.alram_minute == now_minute:
         user.alram_ring = True
-        print('성공')
         user.save()
     else:
         user.alram_ring = False
@@ -94,7 +93,6 @@ def mypage(request, user_id=id):
     details = get_object_or_404(User, id=user_id)
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -127,7 +125,6 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
     details = get_object_or_404(User, id=user_id)
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -172,7 +169,7 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
             t_emotion ="놀람"
         elif total_emotion == 6:
             t_emotion ="중립"
-    emotions_order = emotion.objects.filter(Q(user_id=details.id)& Q(month=dt_now.month) & Q(day=dt_now.day))
+    emotions_order = emotion.objects.filter(Q(user_id=details.id))
     emotions_least = emotions_order.order_by('-pk')[0:3]
     least_emotion = ''
     for i in emotions_least:
@@ -180,11 +177,9 @@ def calender(request, user_id=id, t_month=dt_now.month , t_day=dt_now.day):
     print(least_emotion)
     if '3' in least_emotion or '5' in least_emotion or '6' in least_emotion or least_emotion == '':
         least_emotion = '행복'
-        print('행복')
         return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month})
     else:
         least_emotion = '불행'
-        print('불행')
         return render(request, 'calender.html', {'details':details, 't_emotion':t_emotion, 'emotions':emotions,'t_day':t_day,'t_month':t_month, 'least_emotion':least_emotion})
 
 
@@ -200,7 +195,6 @@ def write_step_one(request, user_id):
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -242,8 +236,6 @@ class write_step_two(APIView):
             if max_value < emotion_json_data[i]['howmany']:
                 max_value = int(emotion_json_data[i]['howmany'])
                 default_emotion = i
-        print("최종 감정 분류 : ",default_emotion," 값 :",max_value)
-
 
         final_emotion_value = 0
         if default_emotion == "angry":
@@ -304,11 +296,10 @@ class write_step_two(APIView):
 
         if details.diary_stack == 7:
             sorted_dict = dict(sorted(details.json_data.items(), key = lambda item: item[1], reverse = True))
-            flower_name= next(iter(sorted_dict))+'_1'
-            if 'neutral' in flower_name :
-                flower_name = 'disgust_1'
-                print('사용자 현재 감정은 중립입니다.')
-            flower_img= flower.objects.get(name=flower_name) 
+            flower_n= next(iter(sorted_dict))+'_1'
+            if 'neutral' in flower_n :
+                flower_n = 'disgust_1'
+            flower_img= flower.objects.get(name=flower_n) 
             details.user_emotion = flower_img.image_10
             details.get_flower.add(flower_img)
             details.save()
@@ -332,7 +323,6 @@ def delete_diary(request, user_id,emotion_id, emotion_num):
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -385,7 +375,6 @@ def view_diary(request, user_id,emotion_id, emotion_num):
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -403,7 +392,10 @@ def view_video(request, user_id,emotion_id, emotion_num):
 def view_wordcloud(request, user_id,emotion_id, emotion_num):
     details = get_object_or_404(User, id=user_id)
     emotions = get_object_or_404(emotion,user_id=details.id, id=emotion_id, number = emotion_num)
-    subprocess.run('xdg-open /media/lhw/flower/work/picture/'+emotions.file_name+'/'+emotions.file_name+'.png', shell=True) # 동영상 보기
+    # subprocess.run('xdg-open /media/lhw/flower/work/picture/'+emotions.file_name+'/'+emotions.file_name+'.png', shell=True) # 워드클라우드 보기
+    subprocess.run('xdg-open /home/lhw/stt/FaceEmotion_ID/wordcloud.png', shell=True) # 워드클라우드 보기
+    # f = open("/home/lhw/stt/FaceEmotion_ID/user_id.txt",'w')subprocess.run('C:/Users/tjdgu/Desktop/wordcloud.png', shell=True) # 워드클라우드 보기
+    
     return render(request, 'diary_detail.html',{'details':details, 'dt_now':dt_now, 'emotions':emotions})
 
 def set_timer(request, user_id):
@@ -413,7 +405,6 @@ def set_timer(request, user_id):
     now_minute = now.minute
     if details.alram_hour == now_hour and details.alram_minute == now_minute:
         details.alram_ring = True
-        print('성공')
         details.save()
     else:
         details.alram_ring = False
@@ -432,7 +423,6 @@ def set_timer(request, user_id):
         details.alram_minute = minute
         details.alram_sound = int(sound)
         details.save()
-        print(hour, minute, sound)
         if float(sound) < 10 :
             sound = '0.0'+str(sound)
         else :
@@ -465,7 +455,6 @@ def set_led(request, user_id):
         color = request.POST['color']
         power_radio = int(request.POST['power_radio'])
         led_bright = request.POST.get('led_bright')
-        print( details.led_power,power_radio)
         if power_radio == 1:
             details.led_power=1
         elif details.led_power == 1 and power_radio == 0:

@@ -24,7 +24,7 @@ class User(AbstractUser):
     led_bright = models.IntegerField(default=5)
     get_flower = models.ManyToManyField("flower", related_name="flower_list")
     json_data = models.JSONField(default=default_dict)
-    user_emotion = models.ImageField(upload_to = 'uploads/',blank=True, null=True)
+    user_emotion = models.ImageField(upload_to = 'emotion_img/',blank=True, null=True)
     diary_stack = models.IntegerField(default=0)
     def __str__(self):
         return str(self.username)

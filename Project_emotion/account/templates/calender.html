@@ -64,10 +64,10 @@
                     }
                 }
                 $(".date").each(function(index){ // 오늘 날짜 표시
-                    if(nowYear==date.getFullYear() && nowMonth==date.getMonth() && $(".date").eq(index).text()==date.getDate()) {
+                    if(nowYear==date.getFullYear() && nowMonth==date.getMonth() && $(".date").eq(index).text()==28) {
                         $(".date").eq(index).addClass('colToday');
                     }
-                    if(nowMonth==Number(t_month)-1 &&$(".date").eq(index).text()==t_day){
+                    if(nowMonth==Number(t_month)-1 &&$(".date").eq(index).text()==28){
                         $(".date").eq(index).addClass('selToday');
                     }
                 })
