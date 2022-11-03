@@ -5,15 +5,14 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/set_led.css' %}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/set_led.css' %}">
     <title>무드등 설정</title>
 </head>
 <body>
     <script>
-        $(window.onload=function(){
+        $(function(){
             var led_color = document.getElementById('led_color').innerText
-            document.getElementById('selected_color').style.backgroundColor = '#'+led_color
             
             var bool = document.getElementById("alarm_bool_none").innerHTML;
             var set_time = document.getElementById("alarm_time_none").innerHTML;
@@ -56,6 +55,17 @@
                 alert('알람이 울립니다.')
                 location.reload();
             }
+            
+            var turn = document.getElementById("turnOnAndOffLabel")
+            turn.onclick = onandoff;
+            function onandoff() {
+                if (turn.innerHTML == '전원&nbsp;&nbsp;&nbsp; OFF'){
+                    turn.innerHTML = '전원&nbsp;&nbsp;&nbsp; ON'
+                }
+                else {
+                    turn.innerHTML = '전원&nbsp;&nbsp;&nbsp; OFF'
+                }
+            }
         })
     </script>
     <div id="alarm_bool_none" style="display: none;">{{user.alram_ring}}</div>
@@ -76,7 +86,8 @@
             </div>
             <div id="led_color" style="display: none;">{{details.led_color}}</div>
             <div id="login">
-                <form action="{% url 'set_led' details.id %}" method="post">
+                <form action="#">
+                <!-- <form action="{% url 'set_led' details.id %}" method="post"> -->
                     {% csrf_token %}
                     <!-- <label><div id="selected_color" style="width: 100%; height: 11%; padding: 7px 0px 0px 0px;">설정된 색상 : {{details.led_color}}</div></label> -->
                     <!-- {{details.led_bright}} -->
@@ -92,7 +103,8 @@
                     <label for="color_3"><div class="color_div color_thr">세번째 색</div></label>
                     <input type="radio" name="color" id="color_3" value="FFFF00"style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <br>
-                    <label for="power"><div class="color_div color_white">전원&nbsp;&nbsp;&nbsp;{{details.led_power}}</div></label>
+                    <div class="color_div color_white" id="turnOnAndOffLabel">전원&nbsp;&nbsp;&nbsp; OFF</div>
+                    <!-- <label for="power"><div class="color_div color_white">전원&nbsp;&nbsp;&nbsp;{{details.led_power}}</div></label> -->
                     <input type="radio" name="power_radio" id="power" value="0" style="display: none;" onclick="$('#login_button').trigger('click');"/>
                     <input type="radio" name="power_radio" id="power2" value="1" style="display: none;" checked/>
                     <br>
@@ -100,7 +112,8 @@
                     <input class="slidebar" type="range" name="led_bright" id="led_bright" value="{{details.led_bright}}" min="0" max="99"  onchange="$('#login_button').trigger('click');">
                     </div>
                     <br>
-                    <input type="submit" id="login_button" style="display: none;">
+                    <input type="button" id="login_button" style="display: none;">
+                    <!-- <input type="submit" id="login_button" style="display: none;"> -->
                 </form>
             </div>
             <!-- <label for="login_button" id="button_box"><div id="button">결정</div></label> -->

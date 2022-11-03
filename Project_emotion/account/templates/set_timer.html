@@ -65,7 +65,8 @@
                 <p>알람 설정</p>
             </div>
             <div id="login">
-                <form action="{% url 'set_timer' details.id %}" method="POST">
+                <form action="#">
+                <!-- <form action="{% url 'set_timer' details.id %}" method="POST"> -->
                     {% csrf_token %}
                     {% if details.alram_minute < 10 %}
                     <label style="display: flex; align-items: center; justify-content: center; font-size: 40px;">알람 시간 : {{details.alram_hour}}시 0{{details.alram_minute}}분</label>
@@ -134,9 +135,11 @@
                          <option value = "59">59</option>
                       </select>
                     <br>
-                    <input type="submit" id="login_button" style="display: none;">
+                    <!-- <input type="submit" id="login_button" style="display: none;"> -->
+                    <input type="button" id="login_button" style="display: none;">
                     <br>
-                    <div class="color_div" style="font-size: 33px;">볼륨 {{details.alram_sound}}&nbsp;&nbsp;
+                    <div class="color_div" style="font-size: 33px;">볼륨 &nbsp;&nbsp;
+                    <!-- <div class="color_div" style="font-size: 33px;">볼륨 {{details.alram_sound}}&nbsp;&nbsp; -->
                     <input class="slidebar" type="range" name="alram_sound" id="alram_sound" value="{{details.alram_sound}}" min="0" max="99"  onchange="$('#login_button').trigger('click');">
                     </div>
                 </form>

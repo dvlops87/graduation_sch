@@ -64,10 +64,10 @@
                     }
                 }
                 $(".date").each(function(index){ // 오늘 날짜 표시
-                    if(nowYear==date.getFullYear() && nowMonth==date.getMonth() && $(".date").eq(index).text()==28) {
+                    if(nowYear==date.getFullYear() && nowMonth==date.getMonth() && $(".date").eq(index).text()==date.getDay()) {
                         $(".date").eq(index).addClass('colToday');
                     }
-                    if(nowMonth==Number(t_month)-1 &&$(".date").eq(index).text()==28){
+                    if(nowMonth==Number(t_month)-1 && $(".date").eq(index).text()==date.getDay()){
                         $(".date").eq(index).addClass('selToday');
                     }
                 })
@@ -164,7 +164,8 @@
         </div>
         <div id="emotion_box">
             <div id="emotion">
-                <a href="{% url 'write_step_one' details.id %}" id="write_diary">일기 작성</a>
+                <a href="#" id="write_diary">일기 작성</a>
+                <!-- <a href="{% url 'write_step_one' details.id %}" id="write_diary">일기 작성</a> -->
                 <p>{{t_month}}월 {{t_day}}일</p>
                 {% if t_emotion == '아직 없습니다.' %}
                 <p id="emotion_value">일기를 작성해주세요!</p>
@@ -176,7 +177,8 @@
                 {% endif %}
                 
                 {% if least_emotion %}
-                <p class="least_emotion">혹시 요즘<br>{{least_emotion}}한 일을<br>겪고 계신가요? <br>그렇다면 <a href="{% url 'happy_emotion_play' details.id t_month t_day %}" id="remind">추억</a>을 <br>되돌아보는 시간을<br>가져보아요</p>
+                <p class="least_emotion">혹시 요즘<br>{{least_emotion}}한 일을<br>겪고 계신가요? <br>그렇다면 <a href="#" id="remind">추억</a>을 <br>되돌아보는 시간을<br>가져보아요</p>
+                <!-- <p class="least_emotion">혹시 요즘<br>{{least_emotion}}한 일을<br>겪고 계신가요? <br>그렇다면 <a href="{% url 'happy_emotion_play' details.id t_month t_day %}" id="remind">추억</a>을 <br>되돌아보는 시간을<br>가져보아요</p> -->
                 {% endif %}
             </div>
             <div id="choose">
@@ -198,8 +200,10 @@
                     <p>{{emotion.number}} 번째 일기 감정 : 중립</p>
                 {% endif %}
                 <p>
-                    <a href="{% url 'view_diary' details.id emotion.id emotion.number %}" id="watch_video">일기 보기 </a>/
-                    <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}" id="delete_video">일기 삭제</a>
+                    <a href="#" id="watch_video">일기 보기 </a>/
+                    <a href="#" id="delete_video">일기 삭제</a>
+                    <!-- <a href="{% url 'view_diary' details.id emotion.id emotion.number %}" id="watch_video">일기 보기 </a>/
+                    <a href="{% url 'delete_diary' details.id emotion.id emotion.number %}" id="delete_video">일기 삭제</a> -->
                 </p>
                 {% endfor %}
                 {% endif %}
