@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/test.css' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/calender.css' %}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회상 영상</title>
+</head>
+<body>
+    <script>
+        $(function(){
+            var set_time = document.getElementById("alarm_time_none").innerHTML;
+            var bool = document.getElementById("alarm_bool_none").innerHTML;
+            console.log('set_time : ',set_time);
+
+            function set_alram() {
+                var now = new Date();   //현재시간
+                
+                hour = now.getHours()   //현재 시간 중 시간.
+                minute = now.getMinutes();
+                if((hour+"").length < 2){
+                    hour="0"+hour;      
+                }
+                if ((minute+"").length < 2){
+                    minute="0"+minute;
+                }
+                today = hour+ "" +minute;      //오늘 날짜 완성.
+                console.log('today : ',today)         
+                // 시간비교
+                if ((eval(today) == eval(set_time)) && bool =='False')  {  
+                     function1();
+                }
+            }
+            set_alram();
+            setInterval(set_alram, 60000); // 1분마다 실행
+
+            
+            function function1(){
+                data = 'run led'
+                $.ajax({
+                    type:'POST',
+                    url:"{% url 'start_led' %}",
+                    data:JSON.stringify(data),
+                    success:function(json){
+                        console.log("data pass success",json);
+                    },
+                    error : function(xhr,errmsg,err) {
+                    console.log(xhr.status + ": " + xhr.responseText); 
+                    }
+                })
+                alert('알람이 울립니다.')
+                location.reload();
+            }
+        })
+    </script>
+    <div id="container">
+        <div id="calender_box">
+            <div id="back">
+                <a href="http://127.0.0.1:8000/home/" style="font-size: 40px;">back</a>
+            </div>
+            <video width="100%" height="160%"  autoplay="autoplay">
+                <source src="/files/uploads/happyVideo.webm" type="video/webm">
+
+                </video>
+        </div>
+    </div>
+</body>
+</html>

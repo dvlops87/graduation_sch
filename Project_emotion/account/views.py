@@ -510,3 +510,6 @@ def happy_emotion_play(request,user_id,t_month, t_day):
     subprocess.run('xdg-open /media/lhw/flower/work/recollection/'+str(range_int)+'.mp4', shell=True)
     
     return redirect(calender,user_id,t_month, t_day)
+
+def happy_emotion_play_beta(request):    
+    return render(request, 'happyVideo.html')
