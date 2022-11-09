@@ -10,6 +10,11 @@ a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
     font-family: 'DungGeunMo';
     margin: 0px;
+    height: 1280px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 a {
     margin: 0px;
@@ -19,8 +24,8 @@ a {
 }
 #container {
     font-family: 'DungGeunMo';
-    height: 1280px;
-    width: 720px;
+    height: 100%;
+    width: 100%;
     margin: 0px;
     display: flex;
     justify-content: center;

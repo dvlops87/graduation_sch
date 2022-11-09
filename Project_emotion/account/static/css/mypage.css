@@ -10,6 +10,10 @@ a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
     font-family: 'DungGeunMo';
     margin: 0px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 input{
     width: 200px;

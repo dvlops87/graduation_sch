@@ -11,6 +11,9 @@ body {
     font-family: 'DungGeunMo';
     margin: 0px;
     background-color: #e2fee9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 input{
     width: 200px;

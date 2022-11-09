@@ -10,9 +10,11 @@ a:hover { color: black; text-decoration: underline; cursor: pointer;}
 body {
     font-family: 'DungGeunMo';
     margin: 0px;
-    height: 1280px;
-    width: 720px;
     background-color: #fbe9e9;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 input{
     width: 200px;
